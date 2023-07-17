@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".MainActivity">
 
     <ImageView
@@ -18,12 +19,13 @@
         app:srcCompat="@mipmap/logoapp2" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/txtEmailLog"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
+        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +39,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
         android:text="INICIAR SESION"
+        android:textColor="#000000"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,12 +48,13 @@
         app:layout_constraintVertical_bias="0.08" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/txtPassLog"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -59,10 +63,12 @@
         app:layout_constraintVertical_bias="0.61" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnLogin"
         android:layout_width="300dp"
         android:layout_height="60dp"
+        android:backgroundTint="#5110C3"
         android:text="Ingresar"
+        android:textColor="#FBFBFB"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -74,7 +80,9 @@
         android:id="@+id/btnRegistro"
         android:layout_width="300dp"
         android:layout_height="60dp"
+        android:backgroundTint="#5110C3"
         android:text="Registrate"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -86,10 +94,13 @@
         android:id="@+id/switch1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#000000"
         android:text="Recordar"
+        android:textColor="#000000"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.826"
+        app:layout_constraintHorizontal_bias="0.742"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.705" />

@@ -7,6 +7,7 @@ public class UsersClass {
     private String address;
     private String phone;
     private String image;
+    private String role;
 
     public UsersClass(String name, String email, String password, String address, String phone, String image) {
         this.name = name;
@@ -15,6 +16,7 @@ public class UsersClass {
         this.address = address;
         this.phone = phone;
         this.image = image;
+        this.role = role;
     }
 
 
@@ -64,5 +66,13 @@ public class UsersClass {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
