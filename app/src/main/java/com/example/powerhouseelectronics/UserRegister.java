@@ -91,18 +91,14 @@ public class UserRegister extends AppCompatActivity {
 
     private void cargarImagen() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Verificar si el permiso ya fue concedido
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                // El permiso ya fue concedido, cargar la imagen
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent, "Selecciona la aplicación"), 10);
             } else {
-                // El permiso no ha sido concedido, solicitarlo al usuario
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
             }
         } else {
-            // Si la versión de Android es menor a Marshmallow, no es necesario solicitar permisos
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             intent.setType("image/*");
             startActivityForResult(Intent.createChooser(intent, "Selecciona la aplicación"), 10);
@@ -114,12 +110,10 @@ public class UserRegister extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // El permiso fue concedido, cargar la imagen
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent, "Selecciona la aplicación"), 10);
             } else {
-                // El permiso fue denegado, mostrar un mensaje o realizar acciones adicionales si es necesario
                 Toast.makeText(this, "Permiso de lectura del almacenamiento externo denegado.", Toast.LENGTH_SHORT).show();
             }
         }
@@ -151,7 +145,6 @@ public class UserRegister extends AppCompatActivity {
     private void enviarDatosUsuario(UsersClass user) {
         Api Api = ApiUrl.getRetrofitInstance().create(Api.class);
 
-        // Convertir la imagen en Multipart
         File imageFile = new File(user.getImage());
         RequestBody imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
