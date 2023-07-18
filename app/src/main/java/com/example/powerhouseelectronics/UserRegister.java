@@ -39,8 +39,6 @@ public class UserRegister extends AppCompatActivity {
     EditText txtEmail, txtPass, txtNombre, txtDireccion, txtNum;
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 100;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
