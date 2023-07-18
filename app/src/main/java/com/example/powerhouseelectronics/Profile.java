@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -43,15 +42,15 @@ public class Profile extends AppCompatActivity {
         TextView txtAddress = findViewById(R.id.txtAdress);
         TextView txtPhone = findViewById(R.id.txtPhone);
 
-        txtName.setText("Nombre: " + name);
-        txtEmail.setText("Email: " + email);
-        txtAddress.setText("Dirección: " + address);
-        txtPhone.setText("Teléfono: " + phone);
+        txtName.setText(name);
+        txtEmail.setText(email);
+        txtAddress.setText(address);
+        txtPhone.setText(phone);
 
         CircleImageView imageView = findViewById(R.id.imageView3);
         Picasso.with(this)
-                .load("https://pbs.twimg.com/profile_images/1188507013233479681/WuNwaQ8R_400x400.jpg")
-                .into(imageView);
+                  .load(image)
+                  .into(imageView);
     }
 
         @Override
