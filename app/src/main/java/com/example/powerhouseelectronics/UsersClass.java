@@ -6,17 +6,14 @@ public class UsersClass {
     private String password;
     private String address;
     private String phone;
-    private String image;
     private String role;
 
-    public UsersClass(String name, String email, String password, String address, String phone, String image) {
+    public UsersClass(String name, String email, String password, String address, String phone) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.address = address;
         this.phone = phone;
-        this.image = image;
-        this.role = role;
     }
 
 
@@ -58,14 +55,6 @@ public class UsersClass {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public String getRole() {

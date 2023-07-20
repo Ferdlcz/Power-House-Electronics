@@ -1,6 +1,5 @@
 package com.example.powerhouseelectronics;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,15 +7,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
+
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
@@ -71,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(responseData);
                             String role = jsonObject.getJSONObject("user").getString("role");
+                            String userId = jsonObject.getJSONObject("user").getString("_id");
                             String token = jsonObject.getString("token");
 
                             SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                             JSONObject userObject = jsonObject.getJSONObject("user");
+                            editor.putString("id", userId);
                             editor.putString("name", userObject.getString("name"));
                             editor.putString("email", userObject.getString("email"));
                             editor.putString("image", userObject.getString("image"));
