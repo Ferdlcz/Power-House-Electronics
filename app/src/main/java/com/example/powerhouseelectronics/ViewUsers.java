@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -64,7 +66,17 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
 
         userLayout = findViewById(R.id.user_layout);
 
-        loadUsersFromServer(); // Cargamos la lista de usuarios al crear la actividad
+        loadUsersFromServer();
+
+        Button btnRedireccionRegistro = findViewById(R.id.btnRegUser);
+
+        btnRedireccionRegistro.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(ViewUsers.this, AdminUserRegister.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadUsersFromServer() {

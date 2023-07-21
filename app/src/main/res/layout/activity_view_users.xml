@@ -16,8 +16,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
             android:id="@+id/user_layout"
@@ -45,8 +47,16 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="16dp"
-                android:textColor="@android:color/black"
-               />
+                android:textColor="@android:color/black" />
+
+            <Button
+                android:id="@+id/btnRegUser"
+                android:layout_width="279dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="#5110C3"
+                android:text="Registrar nuevo usuario"
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
     </ScrollView>

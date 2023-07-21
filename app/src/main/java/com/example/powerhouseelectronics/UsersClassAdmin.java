@@ -1,18 +1,21 @@
 package com.example.powerhouseelectronics;
 
-public class UsersClass {
+public class UsersClassAdmin {
+
     private String name;
     private String email;
     private String password;
     private String address;
     private String phone;
+    private String role;
 
-    public UsersClass(String name, String email, String password, String address, String phone) {
+    public UsersClassAdmin(String name, String email, String password, String address, String phone, String role) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.address = address;
         this.phone = phone;
+        this.role = role;
     }
 
 
@@ -55,5 +58,13 @@ public class UsersClass {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-}
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+}

@@ -48,7 +48,7 @@ public class EditUser extends AppCompatActivity {
         userId = getIntent().getStringExtra(ViewUsers.EXTRA_USER_ID);
 
         if (user != null) {
-            // Cargamos los datos del usuario en la interfaz gráfica
+
             ImageView imageView = findViewById(R.id.imageView4);
             Picasso.with(this)
                     .load(user.getImage())
@@ -118,7 +118,7 @@ public class EditUser extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     Log.d("USER_UPDATE", "Actualización exitosa");
-                    finish(); // Cerramos la actividad actual (EditUser) y volvemos a ViewUsers
+                    finish();
                 } else {
                     Log.d("USER_UPDATE", "Error al actualizar: " + response.code());
                 }
