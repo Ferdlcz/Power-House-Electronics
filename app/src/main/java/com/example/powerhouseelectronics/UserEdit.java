@@ -75,7 +75,10 @@ public class UserEdit extends AppCompatActivity {
                 updateUserInformation();
             }
         });
+
     }
+
+
 
     private void updateUserInformation() {
 
@@ -114,6 +117,14 @@ public class UserEdit extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     Log.d("USER_UPDATE", "Actualización exitosa");
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("name", newName);
+                    editor.putString("email", newEmail);
+                    editor.putString("phone", newPhone);
+                    editor.putString("address", newAddress);
+                    editor.apply();
 
                     finish();
                 } else {

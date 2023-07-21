@@ -138,6 +138,27 @@ public class Profile extends AppCompatActivity {
         logout();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
+        String name = sharedPreferences.getString("name", "");
+        String email = sharedPreferences.getString("email", "");
+        String phone = sharedPreferences.getString("phone", "");
+        String address = sharedPreferences.getString("address", "");
+
+        TextView nameTextView = findViewById(R.id.TxtName);
+        TextView emailTextView = findViewById(R.id.txtGmail);
+        TextView phoneTextView = findViewById(R.id.txtPhone);
+        TextView addressTextView = findViewById(R.id.txtAdress);
+
+        nameTextView.setText(name);
+        emailTextView.setText(email);
+        phoneTextView.setText(phone);
+        addressTextView.setText(address);
+    }
+
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {
             MenuInflater inflater = getMenuInflater();
