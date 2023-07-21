@@ -114,6 +114,7 @@ public class UserEdit extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     Log.d("USER_UPDATE", "Actualización exitosa");
+
                     finish();
                 } else {
                     Log.d("USER_UPDATE", "Error al actualizar: " + response.code());
