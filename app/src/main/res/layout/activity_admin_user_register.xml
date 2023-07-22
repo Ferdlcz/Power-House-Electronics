@@ -124,8 +124,8 @@
 
     <RadioGroup
         android:id="@+id/roleGroup"
-        android:layout_width="327dp"
-        android:layout_height="51dp"
+        android:layout_width="287dp"
+        android:layout_height="53dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/BtnRegistrar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -151,16 +151,6 @@
             android:text="admin"
             app:layout_constraintBottom_toTopOf="@+id/BtnRegistrar"
             app:layout_constraintEnd_toStartOf="@+id/SuperRole"
-            app:layout_constraintTop_toBottomOf="@+id/txtPass"
-            app:layout_constraintVertical_bias="0.493" />
-
-        <RadioButton
-            android:id="@+id/SuperRole"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="superadmin"
-            app:layout_constraintBottom_toTopOf="@+id/BtnRegistrar"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPass"
             app:layout_constraintVertical_bias="0.493" />
 
