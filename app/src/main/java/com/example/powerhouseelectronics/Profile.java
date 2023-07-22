@@ -40,9 +40,22 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        setTitle("");
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences info = getSharedPreferences("Token", MODE_PRIVATE);
+        String userName = info.getString("name", "Nombre de usuario");
+        TextView userNameTextView = findViewById(R.id.user_name);
+        userNameTextView.setText(userName);
+
+        CircleImageView userProfileImageView = findViewById(R.id.user_profile_image);
+
+        String userImageURL = info.getString("image", "");
+
+        Picasso.with(this)
+                .load(userImageURL)
+                .into(userProfileImageView);
 
         Button btnRedireccionEdit = findViewById(R.id.btnEditUser);
 

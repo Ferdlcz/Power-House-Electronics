@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -38,7 +40,7 @@ public class EditUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
-
+        setTitle("");
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ViewUsers.UserResponse user = (ViewUsers.UserResponse) getIntent().getSerializableExtra("user_data");
@@ -46,6 +48,18 @@ public class EditUser extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
         modifierId = sharedPreferences.getString("id", "");
         userId = getIntent().getStringExtra(ViewUsers.EXTRA_USER_ID);
+
+        String userName = sharedPreferences.getString("name", "Nombre de usuario");
+        TextView userNameTextView = findViewById(R.id.user_name);
+        userNameTextView.setText(userName);
+
+        CircleImageView userProfileImageView = findViewById(R.id.user_profile_image);
+
+        String userImageURL = sharedPreferences.getString("image", "");
+
+        Picasso.with(this)
+                .load(userImageURL)
+                .into(userProfileImageView);
 
         if (user != null) {
 

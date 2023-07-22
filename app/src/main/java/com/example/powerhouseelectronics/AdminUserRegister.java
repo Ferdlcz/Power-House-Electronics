@@ -12,14 +12,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -39,10 +43,24 @@ public class AdminUserRegister extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("");
         setContentView(R.layout.activity_admin_user_register);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
+        String userName = sharedPreferences.getString("name", "Nombre de usuario");
+        TextView userNameTextView = findViewById(R.id.user_name);
+        userNameTextView.setText(userName);
+
+        CircleImageView userProfileImageView = findViewById(R.id.user_profile_image);
+
+        String userImageURL = sharedPreferences.getString("image", "");
+
+        Picasso.with(this)
+                .load(userImageURL)
+                .into(userProfileImageView);
 
         btnRegistrar = (Button) findViewById(R.id.BtnRegistrar);
 

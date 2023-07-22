@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -36,9 +38,23 @@ public class UserEdit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("");
         setContentView(R.layout.activity_user_edit);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences info = getSharedPreferences("Token", MODE_PRIVATE);
+        String userName = info.getString("name", "Nombre de usuario");
+        TextView userNameTextView = findViewById(R.id.user_name);
+        userNameTextView.setText(userName);
+
+        CircleImageView userProfileImageView = findViewById(R.id.user_profile_image);
+
+        String userImageURL = info.getString("image", "");
+
+        Picasso.with(this)
+                .load(userImageURL)
+                .into(userProfileImageView);
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);

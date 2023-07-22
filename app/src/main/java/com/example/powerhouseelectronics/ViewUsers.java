@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -22,11 +23,13 @@ import androidx.cardview.widget.CardView;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -47,6 +50,7 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("");
         setContentView(R.layout.activity_view_users);
 
         Spinner roleSpinner = findViewById(R.id.role_spinner);
@@ -63,6 +67,19 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
+        String userName = sharedPreferences.getString("name", "Nombre de usuario");
+        TextView userNameTextView = findViewById(R.id.user_name);
+        userNameTextView.setText(userName);
+
+        CircleImageView userProfileImageView = findViewById(R.id.user_profile_image);
+
+        String userImageURL = sharedPreferences.getString("image", "");
+
+        Picasso.with(this)
+                .load(userImageURL)
+                .into(userProfileImageView);
 
         userLayout = findViewById(R.id.user_layout);
 
