@@ -48,8 +48,6 @@ public class UserRegister extends AppCompatActivity {
         });
     }
 
-
-
     private UsersClass obtenerDatosDelFormulario() {
 
         String name = txtNombre.getText().toString();

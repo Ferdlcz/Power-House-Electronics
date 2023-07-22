@@ -43,10 +43,19 @@ public class PanelAdmin extends AppCompatActivity {
                 .into(userProfileImageView);
 
         Button btnViewUsers = findViewById(R.id.btnGoUsers);
+        Button btnViewProducts = findViewById(R.id.btnViewProducts);
         btnViewUsers.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(PanelAdmin.this, ViewUsers.class);
+                startActivity(intent);
+            }
+        });
+
+        btnViewProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PanelAdmin.this, ViewProducts.class);
                 startActivity(intent);
             }
         });

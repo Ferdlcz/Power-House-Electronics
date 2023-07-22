@@ -19,6 +19,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ViewProducts"
+            android:exported="false" />
+        <activity
+            android:name=".AddPhone"
+            android:exported="false" />
+        <activity
             android:name=".UserEdit"
             android:exported="false" />
         <activity

@@ -27,4 +27,17 @@ public interface Api {
             @Part("phone") RequestBody phone,
             @Part("role") RequestBody role
     );
+
+    @Multipart
+    @POST("cellphones")
+     Call<Void> registerPhone(
+            @Part("brand") RequestBody brand,
+            @Part("model") RequestBody model,
+            @Part("color") RequestBody color,
+            @Part("storage") RequestBody storage,
+            @Part("price") RequestBody price,
+            @Part("screenResolution") RequestBody screenResolution,
+            @Part("cameraResolution") RequestBody cameraResolution,
+            @Part("image") RequestBody image
+    );
 }
