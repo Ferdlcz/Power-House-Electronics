@@ -94,8 +94,6 @@ public class GetUsers {
             }
         });
         cardLayout.addView(deleteButton);
-
-
         return cardView;
     }
 
@@ -103,7 +101,6 @@ public class GetUsers {
         void onEditClicked(ViewUsers.UserResponse user);
     }
 
-    // Define an interface for the Delete button click listener
     public interface OnDeleteClickListener {
         void onDeleteClicked(ViewUsers.UserResponse user);
     }

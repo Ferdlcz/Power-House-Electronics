@@ -1,5 +1,6 @@
 package com.example.powerhouseelectronics;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Multipart;
@@ -38,6 +39,7 @@ public interface Api {
             @Part("price") RequestBody price,
             @Part("screenResolution") RequestBody screenResolution,
             @Part("cameraResolution") RequestBody cameraResolution,
-            @Part("image") RequestBody image
+            @Part MultipartBody.Part image
     );
+
 }

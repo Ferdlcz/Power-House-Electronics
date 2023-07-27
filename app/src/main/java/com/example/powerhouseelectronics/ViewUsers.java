@@ -38,7 +38,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-
 public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClickListener, GetUsers.OnDeleteClickListener {
     LinearLayout userLayout;
     Toolbar toolbar;
@@ -95,7 +94,6 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
             }
         });
     }
-
     private void loadUsersFromServer() {
         OkHttpClient client = new OkHttpClient();
 
@@ -115,7 +113,7 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
                         }
                     });
                 } else {
-                    // Aquí puedes manejar el caso en el que la respuesta no sea exitosa
+
                 }
             }
 
@@ -152,7 +150,6 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == EDIT_USER_REQUEST_CODE && resultCode == RESULT_OK) {
-            // Actualiza la lista de usuarios cuando se complete la edición del usuario
             loadUsersFromServer();
         }
     }

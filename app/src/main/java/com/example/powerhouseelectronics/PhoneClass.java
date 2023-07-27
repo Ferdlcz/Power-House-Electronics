@@ -1,25 +1,34 @@
 package com.example.powerhouseelectronics;
 
-public class PhoneClass {
+import com.google.gson.annotations.SerializedName;
 
+public class PhoneClass {
+    @SerializedName("brand")
     private String brand;
 
+    @SerializedName("model")
     private String model;
 
+    @SerializedName("color")
     private String color;
 
+    @SerializedName("storage")
     private String storage;
 
+    @SerializedName("price")
     private String price;
 
+    @SerializedName("screenResolution")
     private String screenResolution;
 
+    @SerializedName("cameraResolution")
     private String cameraResolution;
 
+    @SerializedName("image")
     private String image;
 
 
-    public PhoneClass(String brand, String model, String color, String storage, String price, String screenResolution, String cameraResolution, String image){
+    public PhoneClass(String brand, String model, String color, String storage, String price, String screenResolution, String cameraResolution, String imageUri) {
         this.brand = brand;
         this.model = model;
         this.color = color;
@@ -27,7 +36,7 @@ public class PhoneClass {
         this.price = price;
         this.screenResolution = screenResolution;
         this.cameraResolution = cameraResolution;
-        this.image = image;
+        this.image = imageUri != null ? imageUri.toString(): null;
     }
 
     public String getBrand() {
