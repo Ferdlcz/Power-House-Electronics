@@ -92,7 +92,7 @@ public class GetUsers {
                     deleteClickListener.onDeleteClicked(user);
                 }
             }
-        });
+       });
         cardLayout.addView(deleteButton);
         return cardView;
     }

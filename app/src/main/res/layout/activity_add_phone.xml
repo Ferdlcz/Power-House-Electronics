@@ -129,6 +129,21 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintVertical_bias="0.704" />
 
+    <EditText
+        android:id="@+id/editTextStock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Cantidad"
+        android:inputType="text"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.777" />
+
     <Button
         android:id="@+id/btnRegisterPhone"
         android:layout_width="wrap_content"
@@ -141,22 +156,22 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.951" />
+        app:layout_constraintVertical_bias="0.973" />
 
     <Button
         android:id="@+id/btnLoadImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#5110C3"
+        android:onClick="onclick"
         android:text="Seleccionar imagen"
         android:textColor="#FFFFFF"
-        android:onClick="onclick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.632"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.823" />
+        app:layout_constraintVertical_bias="0.874" />
 
     <ImageView
         android:id="@+id/DefaultImage"
@@ -167,7 +182,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.822"
+        app:layout_constraintVertical_bias="0.873"
         app:srcCompat="@drawable/imgbase" />
 
 

@@ -40,7 +40,7 @@ public class AddPhone extends AppCompatActivity {
 
     Toolbar toolbar;
 
-    EditText editTextMarca, editTextModelo, editTextColor, editTextAlmacenamiento, editTextPrecio, editTextResolucion, editTextCamara;
+    EditText editTextMarca, editTextModelo, editTextColor, editTextAlmacenamiento, editTextPrecio, editTextResolucion, editTextCamara, editTextStock;
 
     ImageView DefaultImage;
 
@@ -76,6 +76,7 @@ public class AddPhone extends AppCompatActivity {
         editTextPrecio = (EditText) findViewById(R.id.editTextPrecio);
         editTextResolucion = (EditText) findViewById(R.id.editTextResolucion);
         editTextCamara = (EditText) findViewById(R.id.editTextCamara);
+        editTextStock = (EditText) findViewById(R.id.editTextStock);
 
         DefaultImage = (ImageView) findViewById(R.id.DefaultImage);
         Button BtnAddPhone = findViewById(R.id.btnRegisterPhone);
@@ -98,9 +99,10 @@ public class AddPhone extends AppCompatActivity {
         String precio = editTextPrecio.getText().toString();
         String resolucion = editTextResolucion.getText().toString();
         String camara = editTextCamara.getText().toString();
+        String stock = editTextStock.getText().toString();
         String imagePath = obtenerRutaImg();
 
-        return new PhoneClass(marca, modelo, color, almacenamiento , precio, resolucion, camara, imagePath);
+        return new PhoneClass(marca, modelo, color, almacenamiento , precio, resolucion, camara, stock,imagePath);
     }
 
     private String obtenerRutaImg() {
@@ -178,6 +180,7 @@ public class AddPhone extends AppCompatActivity {
                 RequestBody.create(MediaType.parse("text/plain"), products.getPrice()),
                 RequestBody.create(MediaType.parse("text/plain"), products.getScreenResolution()),
                 RequestBody.create(MediaType.parse("text/plain"), products.getCameraResolution()),
+                RequestBody.create(MediaType.parse("text/plain"), products.getStock()),
                 imagePart
         );
 

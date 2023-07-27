@@ -27,8 +27,11 @@ public class PhoneClass {
     @SerializedName("image")
     private String image;
 
+    @SerializedName("stock")
+    private String stock;
 
-    public PhoneClass(String brand, String model, String color, String storage, String price, String screenResolution, String cameraResolution, String imageUri) {
+
+    public PhoneClass(String brand, String model, String color, String storage, String price, String screenResolution, String cameraResolution, String stock, String imageUri) {
         this.brand = brand;
         this.model = model;
         this.color = color;
@@ -36,6 +39,7 @@ public class PhoneClass {
         this.price = price;
         this.screenResolution = screenResolution;
         this.cameraResolution = cameraResolution;
+        this.stock = stock;
         this.image = imageUri != null ? imageUri.toString(): null;
     }
 
@@ -93,6 +97,14 @@ public class PhoneClass {
 
     public void setCameraResolution(String cameraResolution) {
         this.cameraResolution = cameraResolution;
+    }
+
+    public String getStock() {
+        return stock;
+    }
+
+    public void setStock(String stock) {
+        this.stock = stock;
     }
 
     public String getImage() {

@@ -45,7 +45,7 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
     public static final String EXTRA_USER_ID = "user_id";
     private static final int EDIT_USER_REQUEST_CODE = 1;
 
-    private String[] rolesArray = {"admin", "user", "superadmin"};
+    private String[] rolesArray = {"admin", "user"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

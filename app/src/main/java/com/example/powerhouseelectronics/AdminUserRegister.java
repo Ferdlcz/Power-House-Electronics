@@ -48,9 +48,10 @@ public class AdminUserRegister extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
         String userName = sharedPreferences.getString("name", "Nombre de usuario");
+        String token = sharedPreferences.getString("token", "");
+
         TextView userNameTextView = findViewById(R.id.user_name);
         userNameTextView.setText(userName);
 
@@ -102,15 +103,27 @@ public class AdminUserRegister extends AppCompatActivity {
 
     private void enviarDatosUsuario(UsersClassAdmin user) {
         Api Api = ApiUrl.getRetrofitInstance().create(Api.class);
+        SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
+        String token = sharedPreferences.getString("Token", "");
 
+        String logMessage = "API_CALL - Token: " + token +
+                ", Name: " + user.getName() +
+                ", Email: " + user.getEmail() +
+                ", Password: " + user.getPassword() +
+                ", Address: " + user.getAddress() +
+                ", Phone: " + user.getPhone() +
+                ", Role: " + user.getRole();
+
+        Log.d("API_CALL", logMessage);
 
         Call<Void> call = Api.registerUserAdmin(
+                "Bearer " + token,
                 RequestBody.create(MediaType.parse("text/plain"), user.getName()),
                 RequestBody.create(MediaType.parse("text/plain"), user.getEmail()),
                 RequestBody.create(MediaType.parse("text/plain"), user.getPassword()),
                 RequestBody.create(MediaType.parse("text/plain"), user.getAddress()),
                 RequestBody.create(MediaType.parse("text/plain"), user.getPhone()),
-                RequestBody.create(MediaType.parse("text/pain"), user.getRole())
+                RequestBody.create(MediaType.parse("text/plain"), user.getRole())
         );
 
         call.enqueue(new Callback<Void>() {
