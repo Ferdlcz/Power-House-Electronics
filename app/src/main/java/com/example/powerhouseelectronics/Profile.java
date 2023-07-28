@@ -127,11 +127,7 @@ public class Profile extends AppCompatActivity {
     private void UpdateProfileImage(String imagePath) {
         SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
         String modifierId = sharedPreferences.getString("id", "");
-        String name = sharedPreferences.getString("name", "");
-        String email = sharedPreferences.getString("email", "");
-        String phone = sharedPreferences.getString("phone", "");
-        String address = sharedPreferences.getString("address", "");
-        String role = sharedPreferences.getString("role", "");
+
 
         OkHttpClient client = new OkHttpClient();
 
@@ -169,6 +165,7 @@ public class Profile extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     Log.d("PROFILE_UPDATE", "Imagen actualizada correctamente");
+
                 } else {
                     Log.d("PROFILE_UPDATE", "Error al actualizar imagen: " + response.code());
                 }
@@ -336,8 +333,8 @@ public class Profile extends AppCompatActivity {
 
     private void showConfirmationAlert(final String imagePath) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Guardar imagen");
-        builder.setMessage("¿Deseas guardar esta imagen como tu nueva foto de perfil?");
+        builder.setTitle("Actualizar imagen");
+        builder.setMessage("Los cambios se veran reflejados una vez que cierres e inicies sesion!! ¿Deseas guardar esta imagen como tu nueva foto de perfil?");
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
