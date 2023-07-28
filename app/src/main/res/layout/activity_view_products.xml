@@ -10,8 +10,6 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-
-    <!-- Agrega un ScrollView que contenga un LinearLayout -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -33,57 +31,46 @@
                 android:layout_height="wrap_content"
                 android:text="Ver Productos"
                 android:textSize="34sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                app:layout_constraintVertical_bias="0.037" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp" />
 
-            <Button
-                android:id="@+id/btnAddPhone"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Agregar Telefonos"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.065"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                app:layout_constraintVertical_bias="0.145" />
+                android:orientation="horizontal">
 
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Agregar Computadora"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp" />
 
+                <Button
+                    android:id="@+id/btnAddPhone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Agregar Teléfonos"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp" />
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Agregar Computadora"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.927"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                app:layout_constraintVertical_bias="0.145" />
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Agregar Consola"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="AgregarConsola"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                app:layout_constraintVertical_bias="0.243" />
+            </LinearLayout>
 
             <!-- Aquí se agregarán las tarjetas de usuario dinámicamente -->
 
             <!-- TextView para el título "Usuarios" -->
-
-
-
 
         </LinearLayout>
     </ScrollView>

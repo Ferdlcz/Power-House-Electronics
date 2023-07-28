@@ -77,7 +77,7 @@ public class ViewProducts extends AppCompatActivity {
     private void LoadProducts() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://173.255.204.68/api/products")
+                .url("http://173.255.204.68/api/cellphones")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -105,24 +105,24 @@ public class ViewProducts extends AppCompatActivity {
 
     private void mostrarProductos(String jsonData) {
         Gson gson = new Gson();
-        ProductResponseList productResponseList = gson.fromJson(jsonData, ProductResponseList.class);
+        PhoneResponseList phoneResponseList = gson.fromJson(jsonData, PhoneResponseList.class);
 
-        List<ProductResponse> productList = productResponseList.getProducts();
-        if (productList != null && !productList.isEmpty()) {
-            for (ProductResponse cellPhones : productList) {
-                String productJson = gson.toJson(cellPhones);
-                Log.d("PRODUCT_JSON", productJson);
+        List<PhoneResponse> phoneList = phoneResponseList.getPhones();
+        if (phoneList != null && !phoneList.isEmpty()) {
+            for (PhoneResponse cellPhones : phoneList) {
+                String phoneJson = gson.toJson(cellPhones);
+                Log.d("PHONES_JSON", phoneJson);
 
-                CardView productCard = GetProductsAdmin.createCard(this, cellPhones);
-                productLayout.addView(productCard);
+                CardView phoneCard = GetProductsAdmin.createCardPhone(this, cellPhones);
+                productLayout.addView(phoneCard);
             }
         } else {
-            Log.d("PRODUCT_JSON", "No hay productos disponibles");
+            Log.d("PHONES_JSON", "No hay telefonos disponibles");
         }
 
     }
 
-    public class ProductResponse implements Serializable {
+    public class PhoneResponse implements Serializable {
         @SerializedName("_id")
         private String _id;
 
@@ -234,16 +234,16 @@ public class ViewProducts extends AppCompatActivity {
         }
     }
 
-    public class ProductResponseList {
+    public class PhoneResponseList {
         @SerializedName("cellPhones")
-        private List<ViewProducts.ProductResponse> products;
+        private List<ViewProducts.PhoneResponse> phones;
 
-        public List<ViewProducts.ProductResponse> getProducts() {
-            return products;
+        public List<ViewProducts.PhoneResponse> getPhones() {
+            return phones;
         }
 
-        public void setProducts(List<ViewProducts.ProductResponse> products) {
-            this.products = products;
+        public void setProducts(List<ViewProducts.PhoneResponse> phones) {
+            this.phones = phones;
         }
     }
 

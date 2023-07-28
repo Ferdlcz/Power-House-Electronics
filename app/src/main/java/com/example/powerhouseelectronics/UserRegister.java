@@ -59,7 +59,6 @@ public class UserRegister extends AppCompatActivity {
         return new UsersClass(name, email, password, address, phone);
     }
 
-
     private void enviarDatosUsuario(UsersClass user) {
         Api Api = ApiUrl.getRetrofitInstance().create(Api.class);
 
