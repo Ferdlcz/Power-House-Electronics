@@ -1,18 +1,27 @@
 package com.example.powerhouseelectronics;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -35,6 +44,12 @@ public class Profile extends AppCompatActivity {
 
     Toolbar toolbar;
     Button btnDeleteAcc;
+
+    ImageView Imagen;
+
+    Uri selectedImageUri;
+
+    private static final int REQUEST_CODE_STORAGE_PERMISSION = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +112,11 @@ public class Profile extends AppCompatActivity {
         Picasso.with(this)
                   .load(image)
                   .into(imageView);
+
+
+        Imagen = (ImageView) findViewById(R.id.imageView3);
     }
+
 
     private void AlertConfirm() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -106,8 +125,6 @@ public class Profile extends AppCompatActivity {
         builder.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // Si el usuario confirma la eliminación, realiza la solicitud al servidor
-                // para eliminar la cuenta y cierra la sesión del usuario
                 deleteUserAccount();
             }
         });
@@ -211,5 +228,66 @@ public class Profile extends AppCompatActivity {
             Intent intent = new Intent(Profile.this, Profile.class);
             startActivity(intent);
         }
+
+    public void LoadImage(View view) {
+        cargarImagen();
+    }
+
+    private void cargarImagen() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent, "Selecciona la aplicación"), 10);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "Selecciona la aplicación"), 10);
+            } else {
+                Toast.makeText(this, "Permiso de lectura del almacenamiento externo denegado.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            Uri path = data.getData();
+            Imagen.setImageURI(path);
+            if (requestCode == 10 && resultCode == RESULT_OK && data != null) {
+                selectedImageUri = data.getData();
+                String imagePath = obtenerRutaImg();
+                Imagen.setImageURI(selectedImageUri);
+            }
+        }
+    }
+
+    private String obtenerRutaImg() {
+        if (selectedImageUri == null) {
+            return null;
+        }
+        return getPathFromUri(selectedImageUri);
+    }
+    private String getPathFromUri(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String path = cursor.getString(column_index);
+            cursor.close();
+            return path;
+        }
+        return null;
+    }
 
 }
