@@ -28,12 +28,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -48,6 +53,8 @@ public class Profile extends AppCompatActivity {
     ImageView Imagen;
 
     Uri selectedImageUri;
+
+    boolean imageLoaded = false;
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 100;
 
@@ -117,6 +124,63 @@ public class Profile extends AppCompatActivity {
         Imagen = (ImageView) findViewById(R.id.imageView3);
     }
 
+    private void UpdateProfileImage(String imagePath) {
+        SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
+        String modifierId = sharedPreferences.getString("id", "");
+        String name = sharedPreferences.getString("name", "");
+        String email = sharedPreferences.getString("email", "");
+        String phone = sharedPreferences.getString("phone", "");
+        String address = sharedPreferences.getString("address", "");
+        String role = sharedPreferences.getString("role", "");
+
+        OkHttpClient client = new OkHttpClient();
+
+        File imageFile = new File(imagePath);
+        if (!imageFile.exists()) {
+            Log.d("PROFILE_UPDATE", "Error: La imagen no existe en la ruta proporcionada");
+            return;
+        }
+
+        RequestBody imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
+        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("image", imagePath);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String jsonBody = jsonObject.toString();
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addPart(imagePart)
+                .addFormDataPart("data", jsonBody)
+                .build();
+
+        Request request = new Request.Builder()
+                .url("http://173.255.204.68/api/users/image/" + modifierId)
+                .put(requestBody)
+                .build();
+
+        Log.d("PROFILE_UPDATE", "JSON Request Body: " + jsonBody);
+        Log.d("PROFILE_UPDATE", "URL de la solicitud: " + request.url().toString());
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    Log.d("PROFILE_UPDATE", "Imagen actualizada correctamente");
+                } else {
+                    Log.d("PROFILE_UPDATE", "Error al actualizar imagen: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Log.d("PROFILE_UPDATE", "Error en la solicitud: " + e.getMessage());
+            }
+        });
+    }
 
     private void AlertConfirm() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -230,10 +294,6 @@ public class Profile extends AppCompatActivity {
         }
 
     public void LoadImage(View view) {
-        cargarImagen();
-    }
-
-    private void cargarImagen() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Selecciona la aplicación"), 10);
@@ -267,8 +327,25 @@ public class Profile extends AppCompatActivity {
                 selectedImageUri = data.getData();
                 String imagePath = obtenerRutaImg();
                 Imagen.setImageURI(selectedImageUri);
+
+                    showConfirmationAlert(imagePath);
+
             }
         }
+    }
+
+    private void showConfirmationAlert(final String imagePath) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Guardar imagen");
+        builder.setMessage("¿Deseas guardar esta imagen como tu nueva foto de perfil?");
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                UpdateProfileImage(imagePath);
+            }
+        });
+        builder.setNegativeButton("Cancelar", null);
+        builder.show();
     }
 
     private String obtenerRutaImg() {

@@ -172,6 +172,9 @@ public class AddPhone extends AppCompatActivity {
         RequestBody imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
 
+        Log.d("API_CALL_REQUEST", "Image Name: " + imageFile.getName());
+        Log.d("API_CALL_REQUEST", "Image File Path: " + imageFile.getAbsolutePath());
+
         Call<Void> call = api.registerPhone(
                 RequestBody.create(MediaType.parse("text/plain"), products.getBrand()),
                 RequestBody.create(MediaType.parse("text/plain"), products.getModel()),
@@ -183,6 +186,7 @@ public class AddPhone extends AppCompatActivity {
                 RequestBody.create(MediaType.parse("text/plain"), products.getStock()),
                 imagePart
         );
+
 
         call.enqueue(new Callback<Void>() {
             @Override
