@@ -20,20 +20,21 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AddCpu extends AppCompatActivity {
+public class AddConsole extends AppCompatActivity {
 
     Toolbar toolbar;
 
-    ImageView DefaultImage2;
+    ImageView DefaultImage3;
 
     Uri selectedImageUri;
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("");
-        setContentView(R.layout.activity_add_cpu);
+        setContentView(R.layout.activity_add_console);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,10 +53,10 @@ public class AddCpu extends AppCompatActivity {
                 .into(userProfileImageView);
 
 
-        DefaultImage2 = (ImageView) findViewById(R.id.DefaultImage2);
-        Button BtnAddCpu = findViewById(R.id.btnRegisterCpu);
+        DefaultImage3 = (ImageView) findViewById(R.id.DefaultImage3);
+        Button BtnAddConsole = findViewById(R.id.btnRegisterConsole);
 
-        BtnAddCpu.setOnClickListener(new View.OnClickListener() {
+        BtnAddConsole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PhoneClass products = obtenerProductosForm();
@@ -65,8 +66,6 @@ public class AddCpu extends AppCompatActivity {
 
 
     }
-
-
 
 
 

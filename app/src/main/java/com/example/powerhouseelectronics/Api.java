@@ -45,4 +45,32 @@ public interface Api {
             @Part MultipartBody.Part image
     );
 
+    @Multipart
+    @POST("gameconsoles")
+    Call<Void> registerConsole(
+            @Part("brand") RequestBody brand,
+            @Part("model") RequestBody model,
+            @Part("storage") RequestBody storage,
+            @Part("price") RequestBody price,
+            @Part("features") RequestBody features,
+            @Part("color") RequestBody color,
+            @Part("stock")RequestBody stock,
+            @Part MultipartBody.Part image
+    );
+
+    @Multipart
+    @POST("cpus")
+    Call<Void> registerCpu(
+            @Part("brand") RequestBody brand,
+            @Part("model") RequestBody model,
+            @Part("processor") RequestBody processor,
+            @Part("ram") RequestBody ram,
+            @Part("storage") RequestBody storage,
+            @Part("price") RequestBody price,
+            @Part("operatingSystem")RequestBody operatingSystem,
+            @Part("graphicsCard")RequestBody graphicsCard,
+            @Part("stock")RequestBody stock,
+            @Part MultipartBody.Part image
+    );
+
 }
