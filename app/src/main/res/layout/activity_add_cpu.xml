@@ -10,4 +10,192 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar Producto"
+        android:textColor="#000000"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.012" />
+
+    <EditText
+        android:id="@+id/editTextBrand"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Marca"
+        android:inputType="text"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.095" />
+
+    <EditText
+        android:id="@+id/editTextModel"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Modelo"
+        android:inputType="text"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.18" />
+
+    <EditText
+        android:id="@+id/editTextProcessor"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Procesador"
+        android:inputType="text"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.252" />
+
+    <EditText
+        android:id="@+id/editTextStorage"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Almacenamiento"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.326" />
+
+    <EditText
+        android:id="@+id/editTextPrice"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Precio"
+        android:inputType="text"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.405" />
+
+
+    <EditText
+        android:id="@+id/editTextRam"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Ram"
+        android:inputType="text"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.491" />
+
+    <EditText
+        android:id="@+id/editTextOperatingSystem"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Sistema Operativo"
+        android:inputType="text"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.573" />
+
+    <EditText
+        android:id="@+id/editTextStock"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Cantidad"
+        android:inputType="text"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.766" />
+
+    <EditText
+        android:id="@+id/editTextGraphicsCard"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Tarjeta grafica"
+        android:inputType="text"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.668" />
+
+    <Button
+        android:id="@+id/btnRegisterCpu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#5110C3"
+        android:text="Registrar Producto"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.973" />
+
+    <Button
+        android:id="@+id/btnLoadImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#5110C3"
+        android:onClick="onclick"
+        android:text="Seleccionar imagen"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.632"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.874" />
+
+    <ImageView
+        android:id="@+id/DefaultImage2"
+        android:layout_width="50dp"
+        android:layout_height="52dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnLoadImage"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.873"
+        app:srcCompat="@drawable/imgbase" />
 </androidx.constraintlayout.widget.ConstraintLayout>
