@@ -12,6 +12,8 @@ import com.squareup.picasso.Picasso;
 
 public class GetProductsAdmin {
 
+
+    //CARD PARA CELULARES
     public static CardView createCardPhone(Context context, ViewProducts.PhoneResponse phone){
 
         CardView PhoneCardView = new CardView(context);
@@ -84,22 +86,24 @@ public class GetProductsAdmin {
 
         return PhoneCardView;
     }
-/*
-    public static CardView createCardCpu(Context context, ViewProducts.PhoneResponse product){
 
-        CardView productCardView = new CardView(context);
+
+    //CARDS DE COMPUTADORAS
+    public static CardView createCardCpu(Context context, ViewProducts.CpuResponse cpu){
+
+        CardView CpuCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         cardParams.setMargins(20, 20, 20, 20);
-        productCardView.setLayoutParams(cardParams);
-        productCardView.setRadius(4);
-        productCardView.setCardElevation(10);
+        CpuCardView.setLayoutParams(cardParams);
+        CpuCardView.setRadius(4);
+        CpuCardView.setCardElevation(10);
 
         LinearLayout cardLayout = new LinearLayout(context);
         cardLayout.setOrientation(LinearLayout.VERTICAL);
-        productCardView.addView(cardLayout);
+        CpuCardView.addView(cardLayout);
 
         ImageView imageView = new ImageView(context);
         LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
@@ -110,52 +114,125 @@ public class GetProductsAdmin {
         imageView.setLayoutParams(imageParams);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         Picasso.with(context)
-                .load(product.getImage())
+                .load(cpu.getImage())
                 .into(imageView);
 
         cardLayout.addView(imageView);
 
-        TextView brandTextView = new TextView(context);
-        brandTextView.setText("Marca: " + product.getBrand());
-        brandTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-        cardLayout.addView(brandTextView);
+        TextView CpubrandTextView = new TextView(context);
+        CpubrandTextView.setText("Marca: " + cpu.getBrand());
+        CpubrandTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(CpubrandTextView);
 
-        TextView modelTextView = new TextView(context);
-        modelTextView.setText("Modelo: " + product.getModel());
-        modelTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-        cardLayout.addView(modelTextView);
+        TextView CpumodelTextView = new TextView(context);
+        CpumodelTextView.setText("Modelo: " + cpu.getModel());
+        CpumodelTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(CpumodelTextView);
 
-        TextView colorTextView = new TextView(context);
-        colorTextView.setText("Color: " + product.getColor());
-        colorTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-        cardLayout.addView(colorTextView);
+        TextView CpuProcessorTextView = new TextView(context);
+        CpuProcessorTextView.setText("Procesador: " + cpu.getProcessor());
+        CpuProcessorTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(CpuProcessorTextView);
 
-        TextView storageTextView = new TextView(context);
-        storageTextView.setText("Almacenamiento: " + product.getStorage());
-        storageTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-        cardLayout.addView(storageTextView);
+        TextView CpuRamTextView = new TextView(context);
+        CpuRamTextView.setText("Memoria Ram: " + cpu.getRam());
+        CpuRamTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(CpuRamTextView);
 
-        TextView priceTextView = new TextView(context);
-        priceTextView.setText("Precio: " + product.getPrice());
-        priceTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-        cardLayout.addView(priceTextView);
+        TextView CpuStorageTextView = new TextView(context);
+        CpuStorageTextView.setText("Almacenamiento: " + cpu.getStorage());
+        CpuStorageTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(CpuStorageTextView);
 
-        TextView screenresTextView = new TextView(context);
-        screenresTextView.setText("Resolucion de pantalla: " + product.getScreenResolution());
-        screenresTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-        cardLayout.addView(screenresTextView);
+        TextView CpuPriceTextView = new TextView(context);
+        CpuPriceTextView.setText("Precio: " + cpu.getPrice());
+        CpuPriceTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(CpuPriceTextView);
 
-        TextView cameraTextView = new TextView(context);
-        cameraTextView.setText("Camara: " + product.getCameraResolution());
-        cameraTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-        cardLayout.addView(cameraTextView);
+        TextView CpuOperatingSystemTextView = new TextView(context);
+        CpuOperatingSystemTextView.setText("Sistema Operativo: " + cpu.getOperatingSystem());
+        CpuOperatingSystemTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(CpuOperatingSystemTextView);
 
-        TextView stockTextView = new TextView(context);
-        stockTextView.setText("Cantidad: " + product.getStock());
-        stockTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
-        cardLayout.addView(stockTextView);
+        TextView CpuGraphicsCardTextView = new TextView(context);
+        CpuGraphicsCardTextView.setText("Tarjeta Grafica: " + cpu.getGraphicsCard());
+        CpuGraphicsCardTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(CpuGraphicsCardTextView);
 
-        return productCardView;
-    }*/
+        TextView CpuStockTextView = new TextView(context);
+        CpuStockTextView.setText("Cantidad: " + cpu.getStock());
+        CpuStockTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(CpuStockTextView);
+
+        return CpuCardView;
+    }
+
+    public static CardView createCardConsole(Context context, ViewProducts.ConsoleResponse console){
+
+        CardView ConsoleCardView = new CardView(context);
+        LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        cardParams.setMargins(20, 20, 20, 20);
+        ConsoleCardView.setLayoutParams(cardParams);
+        ConsoleCardView.setRadius(4);
+        ConsoleCardView.setCardElevation(10);
+
+        LinearLayout cardLayout = new LinearLayout(context);
+        cardLayout.setOrientation(LinearLayout.VERTICAL);
+        ConsoleCardView.addView(cardLayout);
+
+        ImageView imageView = new ImageView(context);
+        LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                400
+        );
+
+        imageView.setLayoutParams(imageParams);
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        Picasso.with(context)
+                .load(console.getImage())
+                .into(imageView);
+
+        cardLayout.addView(imageView);
+
+        TextView ConsolebrandTextView = new TextView(context);
+        ConsolebrandTextView.setText("Marca: " + console.getBrand());
+        ConsolebrandTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(ConsolebrandTextView);
+
+        TextView ConsolemodelTextView = new TextView(context);
+        ConsolemodelTextView.setText("Modelo: " + console.getModel());
+        ConsolemodelTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(ConsolemodelTextView);
+
+        TextView ConsoleStorageTextView = new TextView(context);
+        ConsoleStorageTextView.setText("Almacenamiento:" + console.getStorage());
+        ConsoleStorageTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(ConsoleStorageTextView);
+
+        TextView ConsolePriceTextView = new TextView(context);
+        ConsolePriceTextView.setText("Precio: " + console.getPrice());
+        ConsolePriceTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(ConsolePriceTextView);
+
+        TextView ConsoleFeaturesTextView = new TextView(context);
+        ConsoleFeaturesTextView.setText("Caracteristicas: " + console.getStorage());
+        ConsoleFeaturesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(ConsoleFeaturesTextView);
+
+        TextView ConsoleColorTextView = new TextView(context);
+        ConsoleColorTextView.setText("Color: " + console.getColor());
+        ConsoleColorTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(ConsoleColorTextView);
+
+        TextView ConsoleStockSystemTextView = new TextView(context);
+        ConsoleStockSystemTextView.setText("Cantidad: " + console.getStock());
+        ConsoleStockSystemTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
+        cardLayout.addView(ConsoleStockSystemTextView);
+
+        return ConsoleCardView;
+    }
 
 }
