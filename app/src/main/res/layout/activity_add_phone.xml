@@ -26,7 +26,7 @@
         app:layout_constraintVertical_bias="0.05" />
 
     <EditText
-        android:id="@+id/editTextMarca"
+        android:id="@+id/txtMarca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -41,7 +41,7 @@
         app:layout_constraintVertical_bias="0.144" />
 
     <EditText
-        android:id="@+id/editTextModelo"
+        android:id="@+id/txtModelo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -56,7 +56,7 @@
         app:layout_constraintVertical_bias="0.237" />
 
     <EditText
-        android:id="@+id/editTextColor"
+        android:id="@+id/txtCaracteristicas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -71,7 +71,7 @@
         app:layout_constraintVertical_bias="0.332" />
 
     <EditText
-        android:id="@+id/editTextAlmacenamiento"
+        android:id="@+id/txtAlmacenamiento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -85,7 +85,7 @@
         app:layout_constraintVertical_bias="0.422" />
 
     <EditText
-        android:id="@+id/editTextPrecio"
+        android:id="@+id/txtPrecio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -100,7 +100,7 @@
         app:layout_constraintVertical_bias="0.514" />
 
     <EditText
-        android:id="@+id/editTextResolucion"
+        android:id="@+id/txtColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -115,7 +115,7 @@
         app:layout_constraintVertical_bias="0.612" />
 
     <EditText
-        android:id="@+id/editTextCamara"
+        android:id="@+id/txtCantidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -130,7 +130,7 @@
         app:layout_constraintVertical_bias="0.704" />
 
     <EditText
-        android:id="@+id/editTextStock"
+        android:id="@+id/TextStock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -145,7 +145,7 @@
         app:layout_constraintVertical_bias="0.777" />
 
     <Button
-        android:id="@+id/btnRegisterPhone"
+        android:id="@+id/btnRegisterConsole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#5110C3"
@@ -174,7 +174,7 @@
         app:layout_constraintVertical_bias="0.874" />
 
     <ImageView
-        android:id="@+id/DefaultImage"
+        android:id="@+id/DefaultImage3"
         android:layout_width="50dp"
         android:layout_height="52dp"
         app:layout_constraintBottom_toBottomOf="parent"

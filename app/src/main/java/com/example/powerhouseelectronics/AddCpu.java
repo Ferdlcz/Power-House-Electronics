@@ -79,8 +79,7 @@ public class AddCpu extends AppCompatActivity {
         editTextProcesador = (EditText) findViewById(R.id.editTextProcessor);
         editTextRam = (EditText) findViewById(R.id.editTextRam);
         editTextSistemaOperativo = (EditText) findViewById(R.id.editTextOperatingSystem);
-        editTextStock = (EditText) findViewById(R.id.editTextStock);
-
+        editTextStock = (EditText) findViewById(R.id.TextStock);
 
         DefaultImage2 = (ImageView) findViewById(R.id.DefaultImage2);
         Button BtnAddCpu = findViewById(R.id.btnRegisterCpu);
@@ -91,7 +90,7 @@ public class AddCpu extends AppCompatActivity {
                 CpuClass products = obtenerProductosForm();
                 EnviarProductos(products);
             }
-        });
+       });
 
 
     }
@@ -217,10 +216,6 @@ public class AddCpu extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

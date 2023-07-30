@@ -69,17 +69,17 @@ public class AddPhone extends AppCompatActivity {
                 .load(userImageURL)
                 .into(userProfileImageView);
 
-        editTextMarca = (EditText) findViewById(R.id.editTextMarca);
-        editTextModelo = (EditText) findViewById(R.id.editTextModelo);
-        editTextColor = (EditText) findViewById(R.id.editTextColor);
-        editTextAlmacenamiento = (EditText) findViewById(R.id.editTextAlmacenamiento);
-        editTextPrecio = (EditText) findViewById(R.id.editTextPrecio);
-        editTextResolucion = (EditText) findViewById(R.id.editTextResolucion);
-        editTextCamara = (EditText) findViewById(R.id.editTextCamara);
-        editTextStock = (EditText) findViewById(R.id.editTextStock);
+        editTextMarca = (EditText) findViewById(R.id.txtMarca);
+        editTextModelo = (EditText) findViewById(R.id.txtModelo);
+        editTextColor = (EditText) findViewById(R.id.txtCaracteristicas);
+        editTextAlmacenamiento = (EditText) findViewById(R.id.txtAlmacenamiento);
+        editTextPrecio = (EditText) findViewById(R.id.txtPrecio);
+        editTextResolucion = (EditText) findViewById(R.id.txtColor);
+        editTextCamara = (EditText) findViewById(R.id.txtCantidad);
+        editTextStock = (EditText) findViewById(R.id.TextStock);
 
-        DefaultImage = (ImageView) findViewById(R.id.DefaultImage);
-        Button BtnAddPhone = findViewById(R.id.btnRegisterPhone);
+        DefaultImage = (ImageView) findViewById(R.id.DefaultImage3);
+        Button BtnAddPhone = findViewById(R.id.btnRegisterConsole);
 
         BtnAddPhone.setOnClickListener(new View.OnClickListener() {
             @Override

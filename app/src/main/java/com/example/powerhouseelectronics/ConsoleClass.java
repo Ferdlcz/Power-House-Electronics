@@ -29,12 +29,13 @@ public class ConsoleClass {
     private String image;
 
 
-    public ConsoleClass(String brand, String model, String storage, String price, String features, String stock, String imageUri) {
+    public ConsoleClass(String brand, String model, String storage, String price, String features, String color, String stock, String imageUri) {
         this.brand = brand;
         this.model = model;
         this.storage = storage;
         this.price = price;
         this.features = features;
+        this.color = color;
         this.stock = stock;
         this.image = imageUri != null ? imageUri.toString(): null;
     }

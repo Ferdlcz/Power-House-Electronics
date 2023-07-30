@@ -66,11 +66,29 @@ public class ViewProducts extends AppCompatActivity {
         LoadConsoles();
 
         Button btnAddPhone = findViewById(R.id.btnAddPhone);
+        Button btnAddConsole = findViewById(R.id.btnAddConsole);
+        Button btnAddCpu = findViewById(R.id.btnAddCpu);
 
         btnAddPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ViewProducts.this, AddPhone.class);
+                startActivity(intent);
+            }
+        });
+
+        btnAddConsole.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewProducts.this, AddConsole.class);
+                startActivity(intent);
+            }
+        });
+
+        btnAddCpu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewProducts.this, AddCpu.class);
                 startActivity(intent);
             }
         });
