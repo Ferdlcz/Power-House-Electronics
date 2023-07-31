@@ -66,6 +66,33 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp" />
 
+                <Button
+                    android:id="@+id/btnViewCpu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Ver Computadora"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp" />
+
+                <Button
+                    android:id="@+id/btnViewPhone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Ver Teléfonos"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp" />
+
+                <Button
+                    android:id="@+id/btnViewConsole"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Ver Consolas"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="16dp" />
+
             </LinearLayout>
 
             <!-- Aquí se agregarán las tarjetas de usuario dinámicamente -->

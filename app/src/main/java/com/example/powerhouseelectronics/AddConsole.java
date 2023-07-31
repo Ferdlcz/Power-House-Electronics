@@ -1,6 +1,7 @@
 package com.example.powerhouseelectronics;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -72,15 +74,15 @@ public class AddConsole extends AppCompatActivity {
                 .load(userImageURL)
                 .into(userProfileImageView);
 
-        txtMarca = (EditText) findViewById(R.id.textMarca);
-        txtModelo = (EditText) findViewById(R.id.textModelo);
-        txtAlmacenamiento = (EditText) findViewById(R.id.textCaracteristicas);
-        txtPrecio = (EditText) findViewById(R.id.textAlmacenamiento);
-        txtCaracteristicas = (EditText) findViewById(R.id.textPrecio);
-        txtColor = (EditText) findViewById(R.id.textColor);
-        txtStock = (EditText) findViewById(R.id.textCantidad);
+        txtMarca =  findViewById(R.id.textMarca);
+        txtModelo =  findViewById(R.id.textModelo);
+        txtAlmacenamiento =  findViewById(R.id.textCaracteristicas);
+        txtPrecio =  findViewById(R.id.textAlmacenamiento);
+        txtCaracteristicas =  findViewById(R.id.textPrecio);
+        txtColor =  findViewById(R.id.textColor);
+        txtStock =  findViewById(R.id.textCantidad);
 
-        DefaultImage3 = (ImageView) findViewById(R.id.DefaultImage3);
+        DefaultImage3 = findViewById(R.id.DefaultImage3);
         Button BtnAddConsole = findViewById(R.id.btnRegisterConsole);
 
         BtnAddConsole.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +112,23 @@ public class AddConsole extends AppCompatActivity {
         if (selectedImageUri == null) {
             return null;
         }
-        return getPathFromUri(selectedImageUri);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            try {
+                ContentResolver resolver = getContentResolver();
+                Cursor cursor = resolver.query(selectedImageUri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                    String displayName = cursor.getString(index);
+                    cursor.close();
+                    return displayName;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        } else {
+            return getPathFromUri(selectedImageUri);
+        }
     }
 
     public void onclick(View view) {
@@ -150,6 +168,7 @@ public class AddConsole extends AppCompatActivity {
             if (requestCode == 10 && resultCode == RESULT_OK && data != null) {
                 selectedImageUri = data.getData();
                 String imagePath = obtenerRutaImg();
+
                 DefaultImage3.setImageURI(selectedImageUri);
             }
         }
@@ -178,12 +197,16 @@ public class AddConsole extends AppCompatActivity {
         Log.d("API_CALL_REQUEST", "Image Name: " + imageFile.getName());
         Log.d("API_CALL_REQUEST", "Image File Path: " + imageFile.getAbsolutePath());
 
+        Gson gson = new Gson();
+        String featuresJson = gson.toJson(products.getFeatures());
+        RequestBody featuresRequestBody = RequestBody.create(MediaType.parse("application/json"), featuresJson);
+
         Call<Void> call = api.registerConsole(
                 RequestBody.create(MediaType.parse("text/plain"), products.getBrand()),
                 RequestBody.create(MediaType.parse("text/plain"), products.getModel()),
                 RequestBody.create(MediaType.parse("text/plain"), products.getStorage()),
                 RequestBody.create(MediaType.parse("text/plain"), products.getPrice()),
-                RequestBody.create(MediaType.parse("text/plain"), products.getFeatures()),
+                featuresRequestBody,
                 RequestBody.create(MediaType.parse("text/plain"), products.getColor()),
                 RequestBody.create(MediaType.parse("text/plain"), products.getStock()),
                 imagePart

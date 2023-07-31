@@ -1,6 +1,7 @@
 package com.example.powerhouseelectronics;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -69,16 +70,16 @@ public class AddPhone extends AppCompatActivity {
                 .load(userImageURL)
                 .into(userProfileImageView);
 
-        editTextMarca = (EditText) findViewById(R.id.txtMarca);
-        editTextModelo = (EditText) findViewById(R.id.txtModelo);
-        editTextColor = (EditText) findViewById(R.id.txtCaracteristicas);
-        editTextAlmacenamiento = (EditText) findViewById(R.id.txtAlmacenamiento);
-        editTextPrecio = (EditText) findViewById(R.id.txtPrecio);
-        editTextResolucion = (EditText) findViewById(R.id.txtColor);
-        editTextCamara = (EditText) findViewById(R.id.txtCantidad);
-        editTextStock = (EditText) findViewById(R.id.TextStock);
+        editTextMarca = findViewById(R.id.txtMarca);
+        editTextModelo = findViewById(R.id.txtModelo);
+        editTextColor = findViewById(R.id.txtCaracteristicas);
+        editTextAlmacenamiento = findViewById(R.id.txtAlmacenamiento);
+        editTextPrecio = findViewById(R.id.txtPrecio);
+        editTextResolucion = findViewById(R.id.txtColor);
+        editTextCamara = findViewById(R.id.txtCantidad);
+        editTextStock = findViewById(R.id.TextStock);
 
-        DefaultImage = (ImageView) findViewById(R.id.DefaultImage3);
+        DefaultImage = findViewById(R.id.DefaultImage3);
         Button BtnAddPhone = findViewById(R.id.btnRegisterConsole);
 
         BtnAddPhone.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +110,25 @@ public class AddPhone extends AppCompatActivity {
         if (selectedImageUri == null) {
             return null;
         }
-        return getPathFromUri(selectedImageUri);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            try {
+                ContentResolver resolver = getContentResolver();
+                Cursor cursor = resolver.query(selectedImageUri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                    String displayName = cursor.getString(index);
+                    cursor.close();
+                    return displayName;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        } else {
+            return getPathFromUri(selectedImageUri);
+        }
     }
+
 
     public void onclick(View view) {
         cargarImagen();

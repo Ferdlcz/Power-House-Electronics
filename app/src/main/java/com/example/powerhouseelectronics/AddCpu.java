@@ -1,6 +1,7 @@
 package com.example.powerhouseelectronics;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -71,24 +72,24 @@ public class AddCpu extends AppCompatActivity {
                 .load(userImageURL)
                 .into(userProfileImageView);
 
-        editTextMarca = (EditText) findViewById(R.id.editTextBrand);
-        editTextModelo = (EditText) findViewById(R.id.editTextModel);
-        editTextPrecio = (EditText) findViewById(R.id.editTextPrice);
-        editTextStorage = (EditText) findViewById(R.id.editTextStorage);
-        editTextTarjetaGrafica = (EditText) findViewById(R.id.editTextGraphicsCard);
-        editTextProcesador = (EditText) findViewById(R.id.editTextProcessor);
-        editTextRam = (EditText) findViewById(R.id.editTextRam);
-        editTextSistemaOperativo = (EditText) findViewById(R.id.editTextOperatingSystem);
-        editTextStock = (EditText) findViewById(R.id.TextStock);
+        editTextMarca =  findViewById(R.id.editTextBrand);
+        editTextModelo =  findViewById(R.id.editTextModel);
+        editTextPrecio = findViewById(R.id.editTextPrice);
+        editTextStorage = findViewById(R.id.editTextStorage);
+        editTextTarjetaGrafica =  findViewById(R.id.editTextGraphicsCard);
+        editTextProcesador = findViewById(R.id.editTextProcessor);
+        editTextRam =  findViewById(R.id.editTextRam);
+        editTextSistemaOperativo =  findViewById(R.id.editTextOperatingSystem);
+        editTextStock =  findViewById(R.id.TextStock);
 
-        DefaultImage2 = (ImageView) findViewById(R.id.DefaultImage2);
+        DefaultImage2 =  findViewById(R.id.DefaultImage2);
         Button BtnAddCpu = findViewById(R.id.btnRegisterCpu);
 
         BtnAddCpu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CpuClass products = obtenerProductosForm();
-                EnviarProductos(products);
+                CpuClass Cpus = obtenerProductosForm();
+                EnviarProductos(Cpus);
             }
        });
 
@@ -106,14 +107,30 @@ public class AddCpu extends AppCompatActivity {
         String stock = editTextStock.getText().toString();
         String imagePath = obtenerRutaImg();
 
-        return new CpuClass(marca, modelo, precio, almacenamiento, sistemaOperativo, procesador, tarjetaGrfica, ram, stock, imagePath);
+        return new CpuClass(marca, modelo, precio, almacenamiento, sistemaOperativo,ram, procesador, tarjetaGrfica,  stock, imagePath);
     }
 
     private String obtenerRutaImg() {
         if (selectedImageUri == null) {
             return null;
         }
-        return getPathFromUri(selectedImageUri);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            try {
+                ContentResolver resolver = getContentResolver();
+                Cursor cursor = resolver.query(selectedImageUri, new String[]{MediaStore.Images.Media.DATA}, null, null, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.Media.DATA);
+                    String displayName = cursor.getString(index);
+                    cursor.close();
+                    return displayName;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        } else {
+            return getPathFromUri(selectedImageUri);
+        }
     }
     public void onclick(View view) {
         cargarImagen();
@@ -170,10 +187,10 @@ public class AddCpu extends AppCompatActivity {
         }
         return null;
     }
-    private void EnviarProductos(CpuClass products) {
+    private void EnviarProductos(CpuClass Cpus) {
         Api api = ApiUrl.getRetrofitInstance().create(Api.class);
 
-        File imageFile = new File(products.getImage());
+        File imageFile = new File(Cpus.getImage());
         RequestBody imageRequestBody = RequestBody.create(MediaType.parse("image/*"), imageFile);
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
 
@@ -181,15 +198,15 @@ public class AddCpu extends AppCompatActivity {
         Log.d("API_CALL_REQUEST", "Image File Path: " + imageFile.getAbsolutePath());
 
         Call<Void> call = api.registerCpu(
-                RequestBody.create(MediaType.parse("text/plain"), products.getBrand()),
-                RequestBody.create(MediaType.parse("text/plain"), products.getModel()),
-                RequestBody.create(MediaType.parse("text/plain"), products.getPrice()),
-                RequestBody.create(MediaType.parse("text/plain"), products.getRam()),
-                RequestBody.create(MediaType.parse("text/plain"), products.getStorage()),
-                RequestBody.create(MediaType.parse("text/plain"), products.getProcessor()),
-                RequestBody.create(MediaType.parse("text/plain"), products.getGraphicsCard()),
-                RequestBody.create(MediaType.parse("text/plain"), products.getOperatingSystem()),
-                RequestBody.create(MediaType.parse("text/plain"), products.getStock()),
+                RequestBody.create(MediaType.parse("text/plain"), Cpus.getBrand()),
+                RequestBody.create(MediaType.parse("text/plain"), Cpus.getModel()),
+                RequestBody.create(MediaType.parse("text/plain"), Cpus.getPrice()),
+                RequestBody.create(MediaType.parse("text/plain"), Cpus.getRam()),
+                RequestBody.create(MediaType.parse("text/plain"), Cpus.getStorage()),
+                RequestBody.create(MediaType.parse("text/plain"), Cpus.getProcessor()),
+                RequestBody.create(MediaType.parse("text/plain"), Cpus.getGraphicsCard()),
+                RequestBody.create(MediaType.parse("text/plain"), Cpus.getOperatingSystem()),
+                RequestBody.create(MediaType.parse("text/plain"), Cpus.getStock()),
                 imagePart
         );
         call.enqueue(new Callback<Void>() {

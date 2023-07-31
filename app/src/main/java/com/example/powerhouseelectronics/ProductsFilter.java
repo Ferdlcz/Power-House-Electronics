@@ -10,11 +10,10 @@ import androidx.cardview.widget.CardView;
 
 import com.squareup.picasso.Picasso;
 
-public class GetProductsAdmin {
-
+public class ProductsFilter {
 
     //CARD PARA CELULARES
-    public static CardView createCardPhone(Context context, ViewProducts.Phone phone){
+    public static CardView createCardPhone(Context context, ViewCellPhones.PhoneResponse phone){
 
         CardView PhoneCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
@@ -89,7 +88,7 @@ public class GetProductsAdmin {
 
 
     //CARDS DE COMPUTADORAS
-    public static CardView createCardCpu(Context context, ViewProducts.CPU cpu){
+    public static CardView createCardCpu(Context context, ViewComputers.CpuResponse cpu){
 
         CardView CpuCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
@@ -167,7 +166,8 @@ public class GetProductsAdmin {
         return CpuCardView;
     }
 
-    public static CardView createCardConsole(Context context, ViewProducts.Console console) {
+    public static CardView createCardConsole(Context context, ViewConsoles.ConsoleResponse console){
+
         CardView ConsoleCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -207,7 +207,7 @@ public class GetProductsAdmin {
         cardLayout.addView(ConsolemodelTextView);
 
         TextView ConsoleStorageTextView = new TextView(context);
-        ConsoleStorageTextView.setText("Almacenamiento: " + console.getStorage());
+        ConsoleStorageTextView.setText("Almacenamiento:" + console.getStorage());
         ConsoleStorageTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(ConsoleStorageTextView);
 
@@ -217,7 +217,7 @@ public class GetProductsAdmin {
         cardLayout.addView(ConsolePriceTextView);
 
         TextView ConsoleFeaturesTextView = new TextView(context);
-        ConsoleFeaturesTextView.setText("Características: " + console.getFeatures());
+        ConsoleFeaturesTextView.setText("Caracteristicas: " + console.getStorage());
         ConsoleFeaturesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(ConsoleFeaturesTextView);
 

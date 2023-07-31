@@ -18,11 +18,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -61,13 +70,14 @@ public class ViewProducts extends AppCompatActivity {
 
         productLayout = findViewById(R.id.product_layout);
 
-        LoadPhones();
-        LoadCpus();
-        LoadConsoles();
-
+        LoadProducts();
         Button btnAddPhone = findViewById(R.id.btnAddPhone);
         Button btnAddConsole = findViewById(R.id.btnAddConsole);
         Button btnAddCpu = findViewById(R.id.btnAddCpu);
+
+        Button btnViewPhone = findViewById(R.id.btnViewPhone);
+        Button btnViewConsole = findViewById(R.id.btnViewConsole);
+        Button btnViewCpu = findViewById(R.id.btnViewCpu);
 
         btnAddPhone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,14 +102,115 @@ public class ViewProducts extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnViewPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewProducts.this, ViewCellPhones.class);
+                startActivity(intent);
+            }
+        });
+
+        btnViewConsole.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewProducts.this, ViewConsoles.class);
+                startActivity(intent);
+            }
+        });
+
+        btnViewCpu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewProducts.this, ViewComputers.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    //Solicitud a Celulares
+    private void LoadProducts() {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("http://173.255.204.68/api/products")
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String jsonData = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mostrarProducts(jsonData);
+                        }
+                    });
+                } else {
+                    // Handle error response
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                // Handle failure
+            }
+        });
+    }
+
+    private void mostrarProducts(String jsonData) {
+        Gson gson = new Gson();
+        ProductResponseList productResponseList = gson.fromJson(jsonData, ProductResponseList.class);
+
+        List<Product> productList = new ArrayList<>();
+
+        if (productResponseList != null) {
+            List<Phone> phones = productResponseList.getPhones();
+            List<CPU> cpus = productResponseList.getCpus();
+            List<Console> consoles = productResponseList.getConsoles();
+
+            if (phones != null) {
+                productList.addAll(phones);
+            }
+
+            if (cpus != null) {
+                productList.addAll(cpus);
+            }
+
+            if (consoles != null) {
+                productList.addAll(consoles);
+            }
+        }
+
+        if (!productList.isEmpty()) {
+            for (Product product : productList) {
+                String productJson = gson.toJson(product);
+                Log.d("PRODUCTS_JSON", productJson);
+
+                CardView productCard = createProductCard(product);
+                productLayout.addView(productCard);
+            }
+        } else {
+            Log.d("PRODUCTS_JSON", "No hay productos disponibles");
+        }
+    }
+
+    private CardView createProductCard(Product product) {
+        if (product instanceof Phone) {
+            return GetProductsAdmin.createCardPhone(this, (Phone) product);
+        } else if (product instanceof CPU) {
+            return GetProductsAdmin.createCardCpu(this, (CPU) product);
+        } else if (product instanceof Console) {
+            return GetProductsAdmin.createCardConsole(this, (Console) product);
+        } else {
+            return new CardView(this);
+        }
+    }
 
     private void LoadPhones() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://173.255.204.68/api/cellphones")
+                .url("http://173.255.204.68/api/products")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -127,154 +238,27 @@ public class ViewProducts extends AppCompatActivity {
 
     private void mostrarPhones(String jsonData) {
         Gson gson = new Gson();
-        PhoneResponseList phoneResponseList = gson.fromJson(jsonData, PhoneResponseList.class);
+        ProductResponseList phoneResponseList = gson.fromJson(jsonData, ProductResponseList.class);
 
-        List<PhoneResponse> phoneList = phoneResponseList.getPhones();
+        List<Phone> phoneList = phoneResponseList.getPhones();
         if (phoneList != null && !phoneList.isEmpty()) {
-            for (PhoneResponse cellPhones : phoneList) {
-                String phoneJson = gson.toJson(cellPhones);
+            for (Phone phone : phoneList) {
+                String phoneJson = gson.toJson(phone);
                 Log.d("PHONES_JSON", phoneJson);
 
-                CardView phoneCard = GetProductsAdmin.createCardPhone(this, cellPhones);
+                CardView phoneCard = GetProductsAdmin.createCardPhone(this, phone);
                 productLayout.addView(phoneCard);
             }
         } else {
             Log.d("PHONES_JSON", "No hay telefonos disponibles");
         }
-
     }
 
-    public class PhoneResponse implements Serializable {
-        @SerializedName("_id")
-        private String _id;
-
-        @SerializedName("brand")
-        private String brand;
-
-        @SerializedName("model")
-        private String model;
-
-        @SerializedName("color")
-        private String color;
-
-        @SerializedName("storage")
-        private String storage;
-
-        @SerializedName("price")
-        private String price;
-
-        @SerializedName("screenResolution")
-        private String screenResolution;
-
-        @SerializedName("cameraResolution")
-        private String cameraResolution;
-
-        @SerializedName("stock")
-        private String stock;
-
-        @SerializedName("image")
-        private String image;
-
-        public String get_id() {
-            return _id;
-        }
-
-        public void set_id(String _id) {
-            this._id = _id;
-        }
-
-        public String getBrand() {
-            return brand;
-        }
-
-        public void setBrand(String brand) {
-            this.brand = brand;
-        }
-
-        public String getModel() {
-            return model;
-        }
-
-        public void setModel(String model) {
-            this.model = model;
-        }
-
-        public String getColor() {
-            return color;
-        }
-
-        public void setColor(String color) {
-            this.color = color;
-        }
-
-        public String getStorage() {
-            return storage;
-        }
-
-        public void setStorage(String storage) {
-            this.storage = storage;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
-
-        public String getScreenResolution() {
-            return screenResolution;
-        }
-
-        public void setScreenResolution(String screenResolution) {
-            this.screenResolution = screenResolution;
-        }
-
-        public String getCameraResolution() {
-            return cameraResolution;
-        }
-
-        public void setCameraResolution(String cameraResolution) {
-            this.cameraResolution = cameraResolution;
-        }
-
-        public String getStock() {
-            return stock;
-        }
-
-        public void setStock(String stock) {
-            this.stock = stock;
-        }
-
-        public String getImage() {
-            return image;
-        }
-
-        public void setImage(String image) {
-            this.image = image;
-        }
-    }
-
-    public class PhoneResponseList {
-        @SerializedName("cellPhones")
-        private List<ViewProducts.PhoneResponse> phones;
-
-        public List<ViewProducts.PhoneResponse> getPhones() {
-            return phones;
-        }
-
-        public void setProducts(List<ViewProducts.PhoneResponse> phones) {
-            this.phones = phones;
-        }
-    }
-
-    //Solicitud a Computadoras
 
     private void LoadCpus() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://173.255.204.68/api/cpus")
+                .url("http://173.255.204.68/api/products")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -302,167 +286,26 @@ public class ViewProducts extends AppCompatActivity {
 
     private void mostrarCpus(String jsonData) {
         Gson gson = new Gson();
-        CpuResponseList cpuResponseList = gson.fromJson(jsonData, CpuResponseList.class);
+        ProductResponseList cpuResponseList = gson.fromJson(jsonData, ProductResponseList.class);
 
-        List<CpuResponse> cpuList = cpuResponseList.getCpus();
+        List<CPU> cpuList = cpuResponseList.getCpus();
         if (cpuList != null && !cpuList.isEmpty()) {
-            for (CpuResponse CPUs : cpuList) {
-                String cpuJson = gson.toJson(CPUs);
+            for (CPU cpu : cpuList) {
+                String cpuJson = gson.toJson(cpu);
                 Log.d("CPUS_JSON", cpuJson);
 
-                CardView cpuCard = GetProductsAdmin.createCardCpu(this, CPUs);
+                CardView cpuCard = GetProductsAdmin.createCardCpu(this, cpu);
                 productLayout.addView(cpuCard);
             }
         } else {
-            Log.d("CPUS_JSON", "No hay telefonos disponibles");
-        }
-
-    }
-
-    public class CpuResponse implements Serializable {
-
-        @SerializedName("_id")
-        private String _id;
-
-        @SerializedName("brand")
-        private String brand;
-
-        @SerializedName("model")
-        private String model;
-
-        @SerializedName("processor")
-        private String processor;
-
-        @SerializedName("ram")
-        private String ram;
-
-        @SerializedName("storage")
-        private String storage;
-
-        @SerializedName("price")
-        private String price;
-
-        @SerializedName("operatingSystem")
-        private String operatingSystem;
-
-        @SerializedName("graphicsCard")
-        private String graphicsCard;
-
-        @SerializedName("stock")
-        private String stock;
-
-        @SerializedName("image")
-        private String image;
-
-        public String get_id() {
-            return _id;
-        }
-
-        public void set_id(String _id) {
-            this._id = _id;
-        }
-
-        public String getBrand() {
-            return brand;
-        }
-
-        public void setBrand(String brand) {
-            this.brand = brand;
-        }
-
-        public String getModel() {
-            return model;
-        }
-
-        public void setModel(String model) {
-            this.model = model;
-        }
-
-        public String getProcessor() {
-            return processor;
-        }
-
-        public void setProcessor(String processor) {
-            this.processor = processor;
-        }
-
-        public String getRam() {
-            return ram;
-        }
-
-        public void setRam(String ram) {
-            this.ram = ram;
-        }
-
-        public String getStorage() {
-            return storage;
-        }
-
-        public void setStorage(String storage) {
-            this.storage = storage;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
-        }
-
-        public String getOperatingSystem() {
-            return operatingSystem;
-        }
-
-        public void setOperatingSystem(String operatingSystem) {
-            this.operatingSystem = operatingSystem;
-        }
-
-        public String getGraphicsCard() {
-            return graphicsCard;
-        }
-
-        public void setGraphicsCard(String graphicsCard) {
-            this.graphicsCard = graphicsCard;
-        }
-
-        public String getStock() {
-            return stock;
-        }
-
-        public void setStock(String stock) {
-            this.stock = stock;
-        }
-
-        public String getImage() {
-            return image;
-        }
-
-        public void setImage(String image) {
-            this.image = image;
+            Log.d("CPUS_JSON", "No hay computadoras disponibles");
         }
     }
-
-    public class CpuResponseList {
-        @SerializedName("CPUs")
-        private List<ViewProducts.CpuResponse> cpus;
-
-        public List<ViewProducts.CpuResponse> getCpus() {
-            return cpus;
-        }
-
-        public void setProducts(List<ViewProducts.CpuResponse> cpus) {
-            this.cpus = cpus;
-        }
-    }
-
-
-    //SOLICITUD DE CONSOLAS
 
     private void LoadConsoles(){
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://173.255.204.68/api/gameconsoles")
+                .url("http://173.255.204.68/api/products")
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -488,52 +331,36 @@ public class ViewProducts extends AppCompatActivity {
     }
 
     private void mostrarConsoles(String jsonData) {
-        Gson gson = new Gson();
-        ConsoleResponseList consoleResponseList = gson.fromJson(jsonData, ConsoleResponseList.class);
 
-        List<ConsoleResponse> consoleList = consoleResponseList.getConsoles();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(new TypeToken<List<String>>() {}.getType(), new FeaturesDeserializer())
+                .create();
+
+        ProductResponseList consoleResponseList = gson.fromJson(jsonData, ProductResponseList.class);
+
+        List<Console> consoleList = consoleResponseList.getConsoles();
         if (consoleList != null && !consoleList.isEmpty()) {
-            for (ConsoleResponse gameConsoles : consoleList) {
-                String consoleJson = gson.toJson(gameConsoles);
+            for (Console console : consoleList) {
+                String consoleJson = gson.toJson(console);
                 Log.d("CONSOLES_JSON", consoleJson);
 
-                CardView consoleCard = GetProductsAdmin.createCardConsole(this, gameConsoles);
+                CardView consoleCard = GetProductsAdmin.createCardConsole(this, console);
                 productLayout.addView(consoleCard);
             }
         } else {
-            Log.d("CPUS_JSON", "No hay telefonos disponibles");
+            Log.d("CONSOLES_JSON", "No hay consolas disponibles");
         }
-
     }
 
-    public class ConsoleResponse implements Serializable {
 
-        @SerializedName("_id")
+    public class Product implements Serializable {
         private String _id;
-
-        @SerializedName("brand")
         private String brand;
-
-        @SerializedName("model")
         private String model;
-
-        @SerializedName("storage")
         private String storage;
-
-        @SerializedName("price")
-        private String price;
-
-        @SerializedName("features")
-        private String features;
-
-        @SerializedName("color")
-        private String color;
-
-        @SerializedName("stock")
-        private String stock;
-
-        @SerializedName("image")
         private String image;
+        private String price;
+        private int stock;
 
         public String get_id() {
             return _id;
@@ -559,12 +386,12 @@ public class ViewProducts extends AppCompatActivity {
             this.model = model;
         }
 
-        public String getStorage() {
-            return storage;
+        public String getImage() {
+            return image;
         }
 
-        public void setStorage(String storage) {
-            this.storage = storage;
+        public void setImage(String image) {
+            this.image = image;
         }
 
         public String getPrice() {
@@ -575,11 +402,103 @@ public class ViewProducts extends AppCompatActivity {
             this.price = price;
         }
 
-        public String getFeatures() {
+        public String getStorage() {
+            return storage;
+        }
+
+        public void setStorage(String storage) {
+            this.storage = storage;
+        }
+
+        public int getStock() {
+            return stock;
+        }
+
+        public void setStock(int stock) {
+            this.stock = stock;
+        }
+    }
+
+    public class Phone extends Product {
+        private String color;
+        private String screenResolution;
+        private String cameraResolution;
+
+        public String getColor() {
+            return color;
+        }
+
+        public void setColor(String color) {
+            this.color = color;
+        }
+
+
+        public String getScreenResolution() {
+            return screenResolution;
+        }
+
+        public void setScreenResolution(String screenResolution) {
+            this.screenResolution = screenResolution;
+        }
+
+        public String getCameraResolution() {
+            return cameraResolution;
+        }
+
+        public void setCameraResolution(String cameraResolution) {
+            this.cameraResolution = cameraResolution;
+        }
+    }
+
+    public class CPU extends Product {
+        private String processor;
+        private String ram;
+        private String operatingSystem;
+        private String graphicsCard;
+
+        public String getProcessor() {
+            return processor;
+        }
+
+        public void setProcessor(String processor) {
+            this.processor = processor;
+        }
+
+        public String getRam() {
+            return ram;
+        }
+
+        public void setRam(String ram) {
+            this.ram = ram;
+        }
+
+        public String getOperatingSystem() {
+            return operatingSystem;
+        }
+
+        public void setOperatingSystem(String operatingSystem) {
+            this.operatingSystem = operatingSystem;
+        }
+
+        public String getGraphicsCard() {
+            return graphicsCard;
+        }
+
+        public void setGraphicsCard(String graphicsCard) {
+            this.graphicsCard = graphicsCard;
+        }
+    }
+
+    public class Console extends Product {
+        @SerializedName("features")
+        private List <String> features;
+        private String color;
+
+        public List <String> getFeatures() {
             return features;
         }
 
-        public void setFeatures(String features) {
+        public void setFeatures(List<String> features) {
             this.features = features;
         }
 
@@ -590,33 +509,55 @@ public class ViewProducts extends AppCompatActivity {
         public void setColor(String color) {
             this.color = color;
         }
+    }
 
-        public String getStock() {
-            return stock;
-        }
-
-        public void setStock(String stock) {
-            this.stock = stock;
-        }
-
-        public String getImage() {
-            return image;
-        }
-
-        public void setImage(String image) {
-            this.image = image;
+    public class FeaturesDeserializer implements JsonDeserializer<List<String>> {
+        @Override
+        public List<String> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            List<String> featuresList = new ArrayList<>();
+            if (json.isJsonArray()) {
+                JsonArray jsonArray = json.getAsJsonArray();
+                for (JsonElement element : jsonArray) {
+                    featuresList.add(element.getAsString());
+                }
+            } else if (json.isJsonPrimitive()) {
+                featuresList.add(json.getAsString());
+            }
+            return featuresList;
         }
     }
 
-    public class ConsoleResponseList {
-        @SerializedName("gameConsoles")
-        private List<ViewProducts.ConsoleResponse> consoles;
+    public class ProductResponseList {
+        @SerializedName("cellphones")
+        private List<Phone> phones;
 
-        public List<ViewProducts.ConsoleResponse> getConsoles() {
+        @SerializedName("computers")
+        private List<CPU> cpus;
+
+        @SerializedName("gconsoles")
+        private List<Console> consoles;
+
+        public List<Phone> getPhones() {
+            return phones;
+        }
+
+        public void setPhones(List<Phone> phones) {
+            this.phones = phones;
+        }
+
+        public List<CPU> getCpus() {
+            return cpus;
+        }
+
+        public void setCpus(List<CPU> cpus) {
+            this.cpus = cpus;
+        }
+
+        public List<Console> getConsoles() {
             return consoles;
         }
 
-        public void setProducts(List<ViewProducts.ConsoleResponse> consoles) {
+        public void setConsoles(List<Console> consoles) {
             this.consoles = consoles;
         }
     }
@@ -663,6 +604,3 @@ public class ViewProducts extends AppCompatActivity {
     }
 
 }
-
-
-

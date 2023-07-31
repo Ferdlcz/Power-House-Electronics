@@ -24,6 +24,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ViewCellPhones"
+            android:exported="false" />
+        <activity
+            android:name=".ViewComputers"
+            android:exported="false" />
+        <activity
+            android:name=".ViewConsoles"
+            android:exported="false" />
+        <activity
             android:name=".AddConsole"
             android:exported="false" />
         <activity
