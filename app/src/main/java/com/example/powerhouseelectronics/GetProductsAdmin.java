@@ -2,6 +2,7 @@ package com.example.powerhouseelectronics;
 
 import android.content.Context;
 import android.util.TypedValue;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -84,6 +85,36 @@ public class GetProductsAdmin {
         stockTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(stockTextView);
 
+        // Crear botones de eliminar y editar
+        LinearLayout buttonLayout = new LinearLayout(context);
+        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        buttonLayoutParams.setMargins(0, 20, 0, 0);
+        buttonLayout.setLayoutParams(buttonLayoutParams);
+        cardLayout.addView(buttonLayout);
+
+        Button editButton = new Button(context);
+        editButton.setText("Editar");
+        LinearLayout.LayoutParams editButtonParams = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+        editButton.setLayoutParams(editButtonParams);
+        buttonLayout.addView(editButton);
+
+        Button deleteButton = new Button(context);
+        deleteButton.setText("Eliminar");
+        LinearLayout.LayoutParams deleteButtonParams = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+        deleteButton.setLayoutParams(deleteButtonParams);
+        buttonLayout.addView(deleteButton);
+
         return PhoneCardView;
     }
 
@@ -164,6 +195,35 @@ public class GetProductsAdmin {
         CpuStockTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(CpuStockTextView);
 
+        LinearLayout buttonLayout = new LinearLayout(context);
+        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        buttonLayoutParams.setMargins(0, 20, 0, 0);
+        buttonLayout.setLayoutParams(buttonLayoutParams);
+        cardLayout.addView(buttonLayout);
+
+        Button editButton = new Button(context);
+        editButton.setText("Editar");
+        LinearLayout.LayoutParams editButtonParams = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+        editButton.setLayoutParams(editButtonParams);
+        buttonLayout.addView(editButton);
+
+        Button deleteButton = new Button(context);
+        deleteButton.setText("Eliminar");
+        LinearLayout.LayoutParams deleteButtonParams = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+        deleteButton.setLayoutParams(deleteButtonParams);
+        buttonLayout.addView(deleteButton);
+
         return CpuCardView;
     }
 
@@ -230,6 +290,36 @@ public class GetProductsAdmin {
         ConsoleStockSystemTextView.setText("Cantidad: " + console.getStock());
         ConsoleStockSystemTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(ConsoleStockSystemTextView);
+
+        LinearLayout buttonLayout = new LinearLayout(context);
+        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        buttonLayoutParams.setMargins(0, 20, 0, 0);
+        buttonLayout.setLayoutParams(buttonLayoutParams);
+        cardLayout.addView(buttonLayout);
+
+        Button editButton = new Button(context);
+        editButton.setText("Editar");
+        LinearLayout.LayoutParams editButtonParams = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+        editButton.setLayoutParams(editButtonParams);
+        buttonLayout.addView(editButton);
+
+        Button deleteButton = new Button(context);
+        deleteButton.setText("Eliminar");
+        LinearLayout.LayoutParams deleteButtonParams = new LinearLayout.LayoutParams(
+                0,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.0f
+        );
+        deleteButton.setLayoutParams(deleteButtonParams);
+        buttonLayout.addView(deleteButton);
+
 
         return ConsoleCardView;
     }
