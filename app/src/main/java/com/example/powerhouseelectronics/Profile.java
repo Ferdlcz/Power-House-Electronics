@@ -265,6 +265,9 @@ public class Profile extends AppCompatActivity {
             }else if (item.getItemId() == R.id.profile){
                 GoProfile();
                 return false;
+            } else if (item.getItemId() == R.id.carrito){
+                GoCarrito();
+                return false;
             } else {
                 return super.onOptionsItemSelected(item);
             }
@@ -287,6 +290,11 @@ public class Profile extends AppCompatActivity {
 
         private void GoProfile (){
             Intent intent = new Intent(Profile.this, Profile.class);
+            startActivity(intent);
+        }
+
+        private void GoCarrito (){
+            Intent intent = new Intent(Profile.this, Carrito.class);
             startActivity(intent);
         }
 

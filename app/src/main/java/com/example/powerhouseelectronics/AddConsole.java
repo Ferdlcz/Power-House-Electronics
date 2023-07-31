@@ -253,6 +253,9 @@ public class AddConsole extends AppCompatActivity {
         }else if (item.getItemId() == R.id.profile){
             GoProfile();
             return false;
+        } else if (item.getItemId() == R.id.carrito){
+            GoCarrito();
+            return false;
         } else {
             return super.onOptionsItemSelected(item);
         }
@@ -278,5 +281,9 @@ public class AddConsole extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void GoCarrito (){
+        Intent intent = new Intent(AddConsole.this, Carrito.class);
+        startActivity(intent);
+    }
 
 }

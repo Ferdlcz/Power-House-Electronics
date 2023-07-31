@@ -190,10 +190,7 @@ public class ViewProducts extends AppCompatActivity {
         } else {
             Log.d("PRODUCTS_JSON", "No hay productos disponibles");
         }
-
-
     }
-
     private CardView createProductCard(Product product) {
         if (product instanceof Phone) {
             return GetProductsAdmin.createCardPhone(this, (Phone) product);
@@ -204,7 +201,6 @@ public class ViewProducts extends AppCompatActivity {
         } else {
             return new CardView(this);
         }
-
     }
 
     public class Product implements Serializable {
@@ -416,6 +412,9 @@ public class ViewProducts extends AppCompatActivity {
         }
     }
 
+
+
+
     //Toolbar y metodos de cierre de sesion
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -429,8 +428,11 @@ public class ViewProducts extends AppCompatActivity {
         if (item.getItemId() == R.id.menu_logout) {
             logout();
             return false;
-        } else if (item.getItemId() == R.id.profile) {
+        }else if (item.getItemId() == R.id.profile){
             GoProfile();
+            return false;
+        } else if (item.getItemId() == R.id.carrito){
+            GoCarrito();
             return false;
         } else {
             return super.onOptionsItemSelected(item);
@@ -454,6 +456,11 @@ public class ViewProducts extends AppCompatActivity {
 
     private void GoProfile() {
         Intent intent = new Intent(ViewProducts.this, Profile.class);
+        startActivity(intent);
+    }
+
+    private void GoCarrito (){
+        Intent intent = new Intent(ViewProducts.this, Carrito.class);
         startActivity(intent);
     }
 

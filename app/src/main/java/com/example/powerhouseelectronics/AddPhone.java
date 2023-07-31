@@ -11,6 +11,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -230,6 +233,58 @@ public class AddPhone extends AppCompatActivity {
             }
         });
     }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_cliente, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_logout) {
+            logout();
+            return false;
+        }else if (item.getItemId() == R.id.profile){
+            GoProfile();
+            return false;
+        } else if (item.getItemId() == R.id.carrito){
+            GoCarrito();
+            return false;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+
+    private void removeTokenFromSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("token");
+        editor.apply();
+    }
+
+    private void logout() {
+        removeTokenFromSharedPreferences();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private void GoProfile (){
+        Intent intent = new Intent(AddPhone.this, Profile.class);
+        startActivity(intent);
+    }
+
+    private void GoCarrito (){
+        Intent intent = new Intent(AddPhone.this, Carrito.class);
+        startActivity(intent);
+    }
+
 }
 
 

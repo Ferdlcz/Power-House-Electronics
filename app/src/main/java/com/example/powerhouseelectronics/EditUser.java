@@ -161,8 +161,11 @@ public class EditUser extends AppCompatActivity {
         if (item.getItemId() == R.id.menu_logout) {
             logout();
             return false;
-        } else if (item.getItemId() == R.id.profile) {
+        }else if (item.getItemId() == R.id.profile){
             GoProfile();
+            return false;
+        } else if (item.getItemId() == R.id.carrito){
+            GoCarrito();
             return false;
         } else {
             return super.onOptionsItemSelected(item);
@@ -186,6 +189,11 @@ public class EditUser extends AppCompatActivity {
 
     private void GoProfile() {
         Intent intent = new Intent(EditUser.this, Profile.class);
+        startActivity(intent);
+    }
+
+    private void GoCarrito (){
+        Intent intent = new Intent(EditUser.this, Carrito.class);
         startActivity(intent);
     }
 }

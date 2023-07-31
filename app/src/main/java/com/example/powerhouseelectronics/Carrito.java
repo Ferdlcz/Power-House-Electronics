@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,14 +16,16 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PanelAdmin extends AppCompatActivity {
+public class Carrito extends AppCompatActivity {
 
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("");
-        setContentView(R.layout.activity_panel_admin);
+        setContentView(R.layout.activity_carrito);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -42,25 +42,7 @@ public class PanelAdmin extends AppCompatActivity {
                 .load(userImageURL)
                 .into(userProfileImageView);
 
-        Button btnViewUsers = findViewById(R.id.btnGoUsers);
-        Button btnViewProducts = findViewById(R.id.btnViewProducts);
-        btnViewUsers.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(PanelAdmin.this, ViewUsers.class);
-                startActivity(intent);
-            }
-        });
-
-        btnViewProducts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PanelAdmin.this, ViewProducts.class);
-                startActivity(intent);
-            }
-        });
     }
-
 
 
 
@@ -102,13 +84,13 @@ public class PanelAdmin extends AppCompatActivity {
         finish();
     }
 
-    private void GoProfile (){
-        Intent intent = new Intent(PanelAdmin.this, Profile.class);
+    private void GoProfile() {
+        Intent intent = new Intent(Carrito.this, Profile.class);
         startActivity(intent);
     }
 
     private void GoCarrito (){
-        Intent intent = new Intent(PanelAdmin.this, Carrito.class);
+        Intent intent = new Intent(Carrito.this, Carrito.class);
         startActivity(intent);
     }
 }

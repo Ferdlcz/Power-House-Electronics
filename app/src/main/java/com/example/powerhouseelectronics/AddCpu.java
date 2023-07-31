@@ -241,13 +241,15 @@ public class AddCpu extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_logout) {
             logout();
             return false;
         }else if (item.getItemId() == R.id.profile){
             GoProfile();
+            return false;
+        } else if (item.getItemId() == R.id.carrito){
+            GoCarrito();
             return false;
         } else {
             return super.onOptionsItemSelected(item);
@@ -271,6 +273,11 @@ public class AddCpu extends AppCompatActivity {
 
     private void GoProfile (){
         Intent intent = new Intent(AddCpu.this, Profile.class);
+        startActivity(intent);
+    }
+
+    private void GoCarrito (){
+        Intent intent = new Intent(AddCpu.this, Carrito.class);
         startActivity(intent);
     }
 

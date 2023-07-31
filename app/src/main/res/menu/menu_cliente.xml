@@ -9,4 +9,7 @@
     <item android:id="@+id/profile" android:title="Ver perfil"
         app:showAsAction="never"> </item>
 
+    <item android:id="@+id/carrito" android:title="Ver Carrito"
+        app:showAsAction="never"> </item>
+
 </menu>
