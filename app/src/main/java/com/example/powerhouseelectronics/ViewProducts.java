@@ -18,14 +18,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -146,14 +144,13 @@ public class ViewProducts extends AppCompatActivity {
                         }
                     });
                 } else {
-                    // Handle error response
+                    
                 }
             }
 
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                // Handle failure
             }
         });
     }
@@ -193,6 +190,8 @@ public class ViewProducts extends AppCompatActivity {
         } else {
             Log.d("PRODUCTS_JSON", "No hay productos disponibles");
         }
+
+
     }
 
     private CardView createProductCard(Product product) {
@@ -205,153 +204,8 @@ public class ViewProducts extends AppCompatActivity {
         } else {
             return new CardView(this);
         }
+
     }
-
-    private void LoadPhones() {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("http://173.255.204.68/api/products")
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String jsonData = response.body().string();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mostrarPhones(jsonData);
-                        }
-                    });
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void mostrarPhones(String jsonData) {
-        Gson gson = new Gson();
-        ProductResponseList phoneResponseList = gson.fromJson(jsonData, ProductResponseList.class);
-
-        List<Phone> phoneList = phoneResponseList.getPhones();
-        if (phoneList != null && !phoneList.isEmpty()) {
-            for (Phone phone : phoneList) {
-                String phoneJson = gson.toJson(phone);
-                Log.d("PHONES_JSON", phoneJson);
-
-                CardView phoneCard = GetProductsAdmin.createCardPhone(this, phone);
-                productLayout.addView(phoneCard);
-            }
-        } else {
-            Log.d("PHONES_JSON", "No hay telefonos disponibles");
-        }
-    }
-
-
-    private void LoadCpus() {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("http://173.255.204.68/api/products")
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String jsonData = response.body().string();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mostrarCpus(jsonData);
-                        }
-                    });
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void mostrarCpus(String jsonData) {
-        Gson gson = new Gson();
-        ProductResponseList cpuResponseList = gson.fromJson(jsonData, ProductResponseList.class);
-
-        List<CPU> cpuList = cpuResponseList.getCpus();
-        if (cpuList != null && !cpuList.isEmpty()) {
-            for (CPU cpu : cpuList) {
-                String cpuJson = gson.toJson(cpu);
-                Log.d("CPUS_JSON", cpuJson);
-
-                CardView cpuCard = GetProductsAdmin.createCardCpu(this, cpu);
-                productLayout.addView(cpuCard);
-            }
-        } else {
-            Log.d("CPUS_JSON", "No hay computadoras disponibles");
-        }
-    }
-
-    private void LoadConsoles(){
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("http://173.255.204.68/api/products")
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String jsonData = response.body().string();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mostrarConsoles(jsonData);
-                        }
-                    });
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void mostrarConsoles(String jsonData) {
-
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(new TypeToken<List<String>>() {}.getType(), new FeaturesDeserializer())
-                .create();
-
-        ProductResponseList consoleResponseList = gson.fromJson(jsonData, ProductResponseList.class);
-
-        List<Console> consoleList = consoleResponseList.getConsoles();
-        if (consoleList != null && !consoleList.isEmpty()) {
-            for (Console console : consoleList) {
-                String consoleJson = gson.toJson(console);
-                Log.d("CONSOLES_JSON", consoleJson);
-
-                CardView consoleCard = GetProductsAdmin.createCardConsole(this, console);
-                productLayout.addView(consoleCard);
-            }
-        } else {
-            Log.d("CONSOLES_JSON", "No hay consolas disponibles");
-        }
-    }
-
 
     public class Product implements Serializable {
         private String _id;

@@ -2,6 +2,7 @@ package com.example.powerhouseelectronics;
 
 import android.content.Context;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,7 +17,6 @@ public class GetProductsAdmin {
 
     //CARD PARA CELULARES
     public static CardView createCardPhone(Context context, ViewProducts.Phone phone){
-
         CardView PhoneCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -93,6 +93,7 @@ public class GetProductsAdmin {
         );
         buttonLayoutParams.setMargins(0, 20, 0, 0);
         buttonLayout.setLayoutParams(buttonLayoutParams);
+        buttonLayout.setId(View.generateViewId()); // Add a dynamically generated ID
         cardLayout.addView(buttonLayout);
 
         Button editButton = new Button(context);
@@ -103,6 +104,7 @@ public class GetProductsAdmin {
                 1.0f
         );
         editButton.setLayoutParams(editButtonParams);
+        editButton.setId(View.generateViewId());
         buttonLayout.addView(editButton);
 
         Button deleteButton = new Button(context);
@@ -113,6 +115,7 @@ public class GetProductsAdmin {
                 1.0f
         );
         deleteButton.setLayoutParams(deleteButtonParams);
+        deleteButton.setId(View.generateViewId());
         buttonLayout.addView(deleteButton);
 
         return PhoneCardView;
@@ -120,8 +123,7 @@ public class GetProductsAdmin {
 
 
     //CARDS DE COMPUTADORAS
-    public static CardView createCardCpu(Context context, ViewProducts.CPU cpu){
-
+    public static CardView createCardCpu(Context context, ViewProducts.CPU cpu) {
         CardView CpuCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -202,6 +204,7 @@ public class GetProductsAdmin {
         );
         buttonLayoutParams.setMargins(0, 20, 0, 0);
         buttonLayout.setLayoutParams(buttonLayoutParams);
+        buttonLayout.setId(View.generateViewId());
         cardLayout.addView(buttonLayout);
 
         Button editButton = new Button(context);
@@ -212,6 +215,7 @@ public class GetProductsAdmin {
                 1.0f
         );
         editButton.setLayoutParams(editButtonParams);
+        editButton.setId(View.generateViewId());
         buttonLayout.addView(editButton);
 
         Button deleteButton = new Button(context);
@@ -222,6 +226,7 @@ public class GetProductsAdmin {
                 1.0f
         );
         deleteButton.setLayoutParams(deleteButtonParams);
+        deleteButton.setId(View.generateViewId());
         buttonLayout.addView(deleteButton);
 
         return CpuCardView;
@@ -298,6 +303,7 @@ public class GetProductsAdmin {
         );
         buttonLayoutParams.setMargins(0, 20, 0, 0);
         buttonLayout.setLayoutParams(buttonLayoutParams);
+        buttonLayout.setId(View.generateViewId());
         cardLayout.addView(buttonLayout);
 
         Button editButton = new Button(context);
@@ -308,6 +314,7 @@ public class GetProductsAdmin {
                 1.0f
         );
         editButton.setLayoutParams(editButtonParams);
+        editButton.setId(View.generateViewId());
         buttonLayout.addView(editButton);
 
         Button deleteButton = new Button(context);
@@ -318,8 +325,8 @@ public class GetProductsAdmin {
                 1.0f
         );
         deleteButton.setLayoutParams(deleteButtonParams);
+        deleteButton.setId(View.generateViewId());
         buttonLayout.addView(deleteButton);
-
 
         return ConsoleCardView;
     }

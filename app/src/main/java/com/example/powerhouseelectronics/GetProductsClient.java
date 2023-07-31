@@ -81,6 +81,7 @@ public class GetProductsClient {
         stockTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(stockTextView);
 
+
         return PhoneCardView;
     }
 
