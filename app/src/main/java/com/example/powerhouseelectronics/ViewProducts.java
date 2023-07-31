@@ -144,7 +144,7 @@ public class ViewProducts extends AppCompatActivity {
                         }
                     });
                 } else {
-                    
+
                 }
             }
 
