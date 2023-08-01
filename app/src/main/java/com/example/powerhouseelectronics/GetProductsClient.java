@@ -1,13 +1,19 @@
 package com.example.powerhouseelectronics;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 public class GetProductsClient {
@@ -81,10 +87,28 @@ public class GetProductsClient {
         stockTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(stockTextView);
 
+        Button addToCartButton = new Button(context);
+        addToCartButton.setText("Añadir al carrito");
+        cardLayout.addView(addToCartButton);
+
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SharedPreferences sharedPreferences = context.getSharedPreferences("CartItems", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                Gson gson = new Gson();
+                String productJson = gson.toJson(phone);
+                Log.d("JSON_DATA", productJson);
+                editor.putString("CartItem", productJson);
+                editor.apply();
+                Intent intent = new Intent(context, Carrito.class);
+                context.startActivity(intent);
+            }
+        });
 
         return PhoneCardView;
     }
-
 
     //CARDS DE COMPUTADORAS
     public static CardView createCardCpu(Context context, Index.CPU cpu){
@@ -162,8 +186,23 @@ public class GetProductsClient {
         CpuStockTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(CpuStockTextView);
 
+        Button addToCartButton = new Button(context);
+        addToCartButton.setText("Añadir al carrito");
+        cardLayout.addView(addToCartButton);
+
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Carrito.class);
+                context.startActivity(intent);
+            }
+        });
+
+
         return CpuCardView;
     }
+
+    //CARD CONSOLES
 
     public static CardView createCardConsole(Context context, Index.Console console) {
         CardView ConsoleCardView = new CardView(context);
@@ -228,6 +267,18 @@ public class GetProductsClient {
         ConsoleStockSystemTextView.setText("Cantidad: " + console.getStock());
         ConsoleStockSystemTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(ConsoleStockSystemTextView);
+
+        Button addToCartButton = new Button(context);
+        addToCartButton.setText("Añadir al carrito");
+        cardLayout.addView(addToCartButton);
+
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Carrito.class);
+                context.startActivity(intent);
+            }
+        });
 
         return ConsoleCardView;
     }

@@ -179,7 +179,7 @@ public class Index extends AppCompatActivity {
         }
     }
 
-    public class Product implements Serializable {
+    public static class Product implements Serializable {
         private String _id;
         private String brand;
         private String model;

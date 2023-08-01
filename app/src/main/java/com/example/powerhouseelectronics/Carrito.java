@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -42,10 +44,30 @@ public class Carrito extends AppCompatActivity {
                 .load(userImageURL)
                 .into(userProfileImageView);
 
+
+        SharedPreferences CarritoItem = getSharedPreferences("CartItems", MODE_PRIVATE);
+        String productJson = CarritoItem.getString("CartItem", "");
+
+        Gson gson = new Gson();
+        Product product = gson.fromJson(productJson, Product.class);
+
+        TextView brandTextView = findViewById(R.id.brandTextView);
+        brandTextView.setText(product.getBrand());
+
+        TextView modelTextView = findViewById(R.id.modelTextView);
+        modelTextView.setText(product.getModel());
+
+        TextView priceTextView = findViewById(R.id.priceTextView);
+        priceTextView.setText(product.getPrice());
+
+        ImageView productImageView = findViewById(R.id.productImageView);
+        Picasso.with(this)
+                .load(product.getImage())
+                .into(productImageView);
     }
 
 
-
+    //MENU Y OTROS METODOS
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -94,3 +116,4 @@ public class Carrito extends AppCompatActivity {
         startActivity(intent);
     }
 }
+
