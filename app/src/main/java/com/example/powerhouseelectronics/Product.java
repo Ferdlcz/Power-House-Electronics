@@ -6,6 +6,14 @@ public class Product {
     private String image;
     private String price;
 
+    public Product(String brand, String model, String price, String image) {
+        this.brand = brand;
+        this.model = model;
+        this.price = price;
+        this.image = image;
+    }
+
+
     public String getBrand() {
         return brand;
     }

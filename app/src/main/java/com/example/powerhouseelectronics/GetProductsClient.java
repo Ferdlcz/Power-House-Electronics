@@ -3,7 +3,6 @@ package com.example.powerhouseelectronics;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +13,10 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class GetProductsClient {
     public static CardView createCardPhone(Context context, Index.Phone phone){
@@ -94,14 +96,26 @@ public class GetProductsClient {
         addToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 SharedPreferences sharedPreferences = context.getSharedPreferences("CartItems", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 Gson gson = new Gson();
-                String productJson = gson.toJson(phone);
-                Log.d("JSON_DATA", productJson);
-                editor.putString("CartItem", productJson);
+
+                String productListJson = sharedPreferences.getString("CartItemsList", "");
+                ArrayList<Product> productList;
+                if (!productListJson.isEmpty()) {
+                    productList = gson.fromJson(productListJson, new TypeToken<ArrayList<Product>>(){}.getType());
+                } else {
+                    productList = new ArrayList<>();
+                }
+
+                Product product = new Product(phone.getBrand(), phone.getModel(), phone.getPrice(), phone.getImage());
+
+                productList.add(product);
+
+                String productListUpdatedJson = gson.toJson(productList);
+                editor.putString("CartItemsList", productListUpdatedJson);
                 editor.apply();
+
                 Intent intent = new Intent(context, Carrito.class);
                 context.startActivity(intent);
             }
