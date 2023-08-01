@@ -114,33 +114,11 @@ public class Carrito extends AppCompatActivity {
             }
         });
     }
-/*
-        SharedPreferences CarritoItem = getSharedPreferences("CartItems", MODE_PRIVATE);
-        String productJson = CarritoItem.getString("CartItem", "");
-
-        Gson gson = new Gson();
-        Product product = gson.fromJson(productJson, Product.class);
-
-        TextView brandTextView = findViewById(R.id.brandTextView);
-        brandTextView.setText(product.getBrand());
-
-        TextView modelTextView = findViewById(R.id.modelTextView);
-        modelTextView.setText(product.getModel());
-
-        TextView priceTextView = findViewById(R.id.priceTextView);
-        priceTextView.setText(product.getPrice());
-
-        ImageView productImageView = findViewById(R.id.productImageView);
-        Picasso.with(this)
-                .load(product.getImage())
-                .into(productImageView);*/
-
 
     public static void addToCart(Context context, Index.Phone phone) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("CartItems", Context.MODE_PRIVATE);
         Gson gson = new Gson();
 
-        // Obtener la lista actual de productos del carrito desde SharedPreferences
         String cartItemsJson = sharedPreferences.getString("CartItemsList", "");
         ArrayList<Index.Phone> cartItemsList = new ArrayList<>();
         if (!cartItemsJson.isEmpty()) {
@@ -148,16 +126,12 @@ public class Carrito extends AppCompatActivity {
             cartItemsList = gson.fromJson(cartItemsJson, type);
         }
 
-        // Agregar el nuevo producto a la lista
         cartItemsList.add(phone);
-
-        // Convertir la lista actualizada a JSON y guardarla en SharedPreferences
         String updatedCartItemsJson = gson.toJson(cartItemsList);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("CartItemsList", updatedCartItemsJson);
         editor.apply();
     }
-
     public static ArrayList<Index.Phone> getCartItems(Context context) {
         SharedPreferences sharedPreferences = context.getSharedPreferences("CartItems", Context.MODE_PRIVATE);
         String cartItemsJson = sharedPreferences.getString("CartItemsList", "");
@@ -171,7 +145,6 @@ public class Carrito extends AppCompatActivity {
 
         return cartItemsList;
     }
-
 
     //MENU Y OTROS METODOS
     @Override

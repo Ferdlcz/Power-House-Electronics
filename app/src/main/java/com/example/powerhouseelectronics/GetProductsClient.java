@@ -108,7 +108,7 @@ public class GetProductsClient {
                     productList = new ArrayList<>();
                 }
 
-                Product product = new Product(phone.getBrand(), phone.getModel(), phone.getPrice(), phone.getImage());
+                Product product = new Product(phone.get_id() ,phone.getBrand(), phone.getModel(), phone.getPrice(), phone.getImage());
 
                 productList.add(product);
 
@@ -120,7 +120,6 @@ public class GetProductsClient {
                 context.startActivity(intent);
             }
         });
-
         return PhoneCardView;
     }
 
@@ -203,15 +202,33 @@ public class GetProductsClient {
         Button addToCartButton = new Button(context);
         addToCartButton.setText("Añadir al carrito");
         cardLayout.addView(addToCartButton);
-
         addToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences("CartItems", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                Gson gson = new Gson();
+
+                String productListJson = sharedPreferences.getString("CartItemsList", "");
+                ArrayList<Product> productList;
+                if (!productListJson.isEmpty()) {
+                    productList = gson.fromJson(productListJson, new TypeToken<ArrayList<Product>>(){}.getType());
+                } else {
+                    productList = new ArrayList<>();
+                }
+
+                Product product = new Product(cpu.get_id() ,cpu.getBrand(), cpu.getModel(), cpu.getPrice(), cpu.getImage());
+
+                productList.add(product);
+
+                String productListUpdatedJson = gson.toJson(productList);
+                editor.putString("CartItemsList", productListUpdatedJson);
+                editor.apply();
+
                 Intent intent = new Intent(context, Carrito.class);
                 context.startActivity(intent);
             }
         });
-
 
         return CpuCardView;
     }
@@ -285,15 +302,33 @@ public class GetProductsClient {
         Button addToCartButton = new Button(context);
         addToCartButton.setText("Añadir al carrito");
         cardLayout.addView(addToCartButton);
-
         addToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences("CartItems", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                Gson gson = new Gson();
+
+                String productListJson = sharedPreferences.getString("CartItemsList", "");
+                ArrayList<Product> productList;
+                if (!productListJson.isEmpty()) {
+                    productList = gson.fromJson(productListJson, new TypeToken<ArrayList<Product>>(){}.getType());
+                } else {
+                    productList = new ArrayList<>();
+                }
+
+                Product product = new Product(console.get_id() ,console.getBrand(), console.getModel(), console.getPrice(), console.getImage());
+
+                productList.add(product);
+
+                String productListUpdatedJson = gson.toJson(productList);
+                editor.putString("CartItemsList", productListUpdatedJson);
+                editor.apply();
+
                 Intent intent = new Intent(context, Carrito.class);
                 context.startActivity(intent);
             }
         });
-
         return ConsoleCardView;
     }
 }

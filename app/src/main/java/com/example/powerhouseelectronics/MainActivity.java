@@ -82,10 +82,10 @@ public class MainActivity extends AppCompatActivity {
                             SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("token", token);
+                            editor.putString("id", userId);
 
 
                             JSONObject userObject = jsonObject.getJSONObject("user");
-                            editor.putString("id", userId);
                             editor.putString("name", userObject.getString("name"));
                             editor.putString("email", userObject.getString("email"));
                             editor.putString("image", userObject.getString("image"));

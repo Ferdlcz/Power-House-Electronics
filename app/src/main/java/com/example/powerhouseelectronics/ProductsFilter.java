@@ -1,14 +1,22 @@
 package com.example.powerhouseelectronics;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.TypedValue;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class ProductsFilter {
 
@@ -82,6 +90,37 @@ public class ProductsFilter {
         stockTextView.setText("Cantidad: " + phone.getStock());
         stockTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(stockTextView);
+
+        Button addToCartButton = new Button(context);
+        addToCartButton.setText("Añadir al carrito");
+        cardLayout.addView(addToCartButton);
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences("CartItems", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                Gson gson = new Gson();
+
+                String productListJson = sharedPreferences.getString("CartItemsList", "");
+                ArrayList<Product> productList;
+                if (!productListJson.isEmpty()) {
+                    productList = gson.fromJson(productListJson, new TypeToken<ArrayList<Product>>(){}.getType());
+                } else {
+                    productList = new ArrayList<>();
+                }
+
+                Product product = new Product(phone.get_id() ,phone.getBrand(), phone.getModel(), phone.getPrice(), phone.getImage());
+
+                productList.add(product);
+
+                String productListUpdatedJson = gson.toJson(productList);
+                editor.putString("CartItemsList", productListUpdatedJson);
+                editor.apply();
+
+                Intent intent = new Intent(context, Carrito.class);
+                context.startActivity(intent);
+            }
+        });
 
         return PhoneCardView;
     }
@@ -163,6 +202,37 @@ public class ProductsFilter {
         CpuStockTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(CpuStockTextView);
 
+        Button addToCartButton = new Button(context);
+        addToCartButton.setText("Añadir al carrito");
+        cardLayout.addView(addToCartButton);
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences("CartItems", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                Gson gson = new Gson();
+
+                String productListJson = sharedPreferences.getString("CartItemsList", "");
+                ArrayList<Product> productList;
+                if (!productListJson.isEmpty()) {
+                    productList = gson.fromJson(productListJson, new TypeToken<ArrayList<Product>>(){}.getType());
+                } else {
+                    productList = new ArrayList<>();
+                }
+
+                Product product = new Product(cpu.get_id() ,cpu.getBrand(), cpu.getModel(), cpu.getPrice(), cpu.getImage());
+
+                productList.add(product);
+
+                String productListUpdatedJson = gson.toJson(productList);
+                editor.putString("CartItemsList", productListUpdatedJson);
+                editor.apply();
+
+                Intent intent = new Intent(context, Carrito.class);
+                context.startActivity(intent);
+            }
+        });
+
         return CpuCardView;
     }
 
@@ -230,6 +300,37 @@ public class ProductsFilter {
         ConsoleStockSystemTextView.setText("Cantidad: " + console.getStock());
         ConsoleStockSystemTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(ConsoleStockSystemTextView);
+
+        Button addToCartButton = new Button(context);
+        addToCartButton.setText("Añadir al carrito");
+        cardLayout.addView(addToCartButton);
+        addToCartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = context.getSharedPreferences("CartItems", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                Gson gson = new Gson();
+
+                String productListJson = sharedPreferences.getString("CartItemsList", "");
+                ArrayList<Product> productList;
+                if (!productListJson.isEmpty()) {
+                    productList = gson.fromJson(productListJson, new TypeToken<ArrayList<Product>>(){}.getType());
+                } else {
+                    productList = new ArrayList<>();
+                }
+
+                Product product = new Product(console.get_id() ,console.getBrand(), console.getModel(), console.getPrice(), console.getImage());
+
+                productList.add(product);
+
+                String productListUpdatedJson = gson.toJson(productList);
+                editor.putString("CartItemsList", productListUpdatedJson);
+                editor.apply();
+
+                Intent intent = new Intent(context, Carrito.class);
+                context.startActivity(intent);
+            }
+        });
 
         return ConsoleCardView;
     }
