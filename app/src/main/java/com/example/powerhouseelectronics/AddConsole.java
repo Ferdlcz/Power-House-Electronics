@@ -76,9 +76,9 @@ public class AddConsole extends AppCompatActivity {
 
         txtMarca =  findViewById(R.id.textMarca);
         txtModelo =  findViewById(R.id.textModelo);
-        txtAlmacenamiento =  findViewById(R.id.textCaracteristicas);
-        txtPrecio =  findViewById(R.id.textAlmacenamiento);
-        txtCaracteristicas =  findViewById(R.id.textPrecio);
+        txtAlmacenamiento =  findViewById(R.id.textAlmacenamiento);
+        txtPrecio =  findViewById(R.id.textPrecio);
+        txtCaracteristicas =  findViewById(R.id.textCaracteristicas);
         txtColor =  findViewById(R.id.textColor);
         txtStock =  findViewById(R.id.textCantidad);
 

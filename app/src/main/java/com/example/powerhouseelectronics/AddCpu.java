@@ -74,10 +74,10 @@ public class AddCpu extends AppCompatActivity {
 
         editTextMarca =  findViewById(R.id.editTextBrand);
         editTextModelo =  findViewById(R.id.editTextModel);
-        editTextPrecio = findViewById(R.id.editTextPrice);
+        editTextProcesador = findViewById(R.id.editTextProcessor);
         editTextStorage = findViewById(R.id.editTextStorage);
         editTextTarjetaGrafica =  findViewById(R.id.editTextGraphicsCard);
-        editTextProcesador = findViewById(R.id.editTextProcessor);
+        editTextPrecio = findViewById(R.id.editTextPrice);
         editTextRam =  findViewById(R.id.editTextRam);
         editTextSistemaOperativo =  findViewById(R.id.editTextOperatingSystem);
         editTextStock =  findViewById(R.id.TextStock);
@@ -99,15 +99,15 @@ public class AddCpu extends AppCompatActivity {
         String marca = editTextMarca.getText().toString();
         String modelo = editTextModelo.getText().toString();
         String precio = editTextPrecio.getText().toString();
-        String almacenamiento = editTextStorage.getText().toString();
-        String sistemaOperativo = editTextSistemaOperativo.getText().toString();
         String ram = editTextRam.getText().toString();
+        String almacenamiento = editTextStorage.getText().toString();
         String procesador = editTextProcesador.getText().toString();
+        String sistemaOperativo = editTextSistemaOperativo.getText().toString();
         String tarjetaGrfica = editTextTarjetaGrafica.getText().toString();
         String stock = editTextStock.getText().toString();
         String imagePath = obtenerRutaImg();
 
-        return new CpuClass(marca, modelo, precio, almacenamiento, sistemaOperativo,ram, procesador, tarjetaGrfica,  stock, imagePath);
+        return new CpuClass(marca, modelo,precio, ram, almacenamiento, procesador, sistemaOperativo, tarjetaGrfica, stock, imagePath);
     }
 
     private String obtenerRutaImg() {

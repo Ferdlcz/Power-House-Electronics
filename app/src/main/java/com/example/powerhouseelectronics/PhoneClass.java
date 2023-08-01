@@ -30,7 +30,6 @@ public class PhoneClass {
     @SerializedName("stock")
     private String stock;
 
-
     public PhoneClass(String brand, String model, String color, String storage, String price, String screenResolution, String cameraResolution, String stock, String imageUri) {
         this.brand = brand;
         this.model = model;

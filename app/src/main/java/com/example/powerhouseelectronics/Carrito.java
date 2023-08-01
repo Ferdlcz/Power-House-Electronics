@@ -22,10 +22,20 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class Carrito extends AppCompatActivity {
 
@@ -111,6 +121,60 @@ public class Carrito extends AppCompatActivity {
                 Intent intent = new Intent(Carrito.this, Index.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
+            }
+        });
+
+
+
+        Button buyAllButton = findViewById(R.id.BuyAll);
+        buyAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
+                String token = sharedPreferences.getString("token", "");
+                String shippingAddress = sharedPreferences.getString("address", "");
+
+                SharedPreferences cartItemsSharedPreferences = getSharedPreferences("CartItems", MODE_PRIVATE);
+                String productListJson = cartItemsSharedPreferences.getString("CartItemsList", "");
+                ArrayList<Product> productList = new Gson().fromJson(productListJson, new TypeToken<ArrayList<Product>>(){}.getType());
+
+                ArrayList<Map<String, Object>> productsList = new ArrayList<>();
+                for (Product product : productList) {
+                    Map<String, Object> productMap = new HashMap<>();
+                    productMap.put("product", product.getId());
+                    productMap.put("quantity", 1);
+                    productsList.add(productMap);
+                }
+
+                Map<String, Object> requestBody = new HashMap<>();
+                requestBody.put("token", token);
+                requestBody.put("products", productsList);
+                requestBody.put("shippingAddress", shippingAddress);
+
+                OkHttpClient client = new OkHttpClient();
+                MediaType mediaType = MediaType.parse("application/json");
+                RequestBody body = RequestBody.create(mediaType, new Gson().toJson(requestBody));
+                Request request = new Request.Builder()
+                        .url("http://173.255.204.68/api/orders")
+                        .post(body)
+                        .build();
+
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            cartItemsSharedPreferences.edit().remove("CartItemsList").apply();
+                            Intent intent = new Intent(Carrito.this, Index.class);
+                            startActivity(intent);
+                        } else {
+                        }
+                    }
+                });
             }
         });
     }
