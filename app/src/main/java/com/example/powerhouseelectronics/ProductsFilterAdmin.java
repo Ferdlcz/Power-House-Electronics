@@ -12,11 +12,11 @@ import androidx.cardview.widget.CardView;
 
 import com.squareup.picasso.Picasso;
 
-public class GetProductsAdmin {
-
+public class ProductsFilterAdmin {
 
     //CARD PARA CELULARES
-    public static CardView createCardPhone(Context context, ViewProducts.Phone phone){
+    public static CardView createCardPhone(Context context, ViewCellPhonesAdmin.PhoneResponse phone, OnDeleteClickListener deleteClickListener){
+
         CardView PhoneCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -85,45 +85,26 @@ public class GetProductsAdmin {
         stockTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(stockTextView);
 
-        // Crear botones de eliminar y editar
-        LinearLayout buttonLayout = new LinearLayout(context);
-        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        buttonLayoutParams.setMargins(0, 20, 0, 0);
-        buttonLayout.setLayoutParams(buttonLayoutParams);
-        buttonLayout.setId(View.generateViewId()); // Add a dynamically generated ID
-        cardLayout.addView(buttonLayout);
-
-        Button editButton = new Button(context);
-        editButton.setText("Editar");
-        LinearLayout.LayoutParams editButtonParams = new LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.0f
-        );
-        editButton.setLayoutParams(editButtonParams);
-        editButton.setId(View.generateViewId());
-        buttonLayout.addView(editButton);
-
         Button deleteButton = new Button(context);
         deleteButton.setText("Eliminar");
-        LinearLayout.LayoutParams deleteButtonParams = new LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1.0f
-        );
-        deleteButton.setLayoutParams(deleteButtonParams);
-        deleteButton.setId(View.generateViewId());
-        buttonLayout.addView(deleteButton);
+        cardLayout.addView(deleteButton);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (deleteClickListener != null) {
+                    deleteClickListener.onDeleteClicked(phone);
+                }
+            }
+        });
 
         return PhoneCardView;
     }
 
 
     //CARDS DE COMPUTADORAS
-    public static CardView createCardCpu(Context context, ViewProducts.CPU cpu) {
+    public static CardView createCardCpu(Context context, ViewComputersAdmin.CpuResponse cpu, OnDeleteClickListener deleteClickListener){
+
         CardView CpuCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -197,10 +178,25 @@ public class GetProductsAdmin {
         CpuStockTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(CpuStockTextView);
 
+        Button deleteButton = new Button(context);
+        deleteButton.setText("Eliminar");
+        cardLayout.addView(deleteButton);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (deleteClickListener != null) {
+                    deleteClickListener.onDeleteClicked(cpu);
+                }
+            }
+        });
+
+
         return CpuCardView;
     }
 
-    public static CardView createCardConsole(Context context, ViewProducts.Console console) {
+    public static CardView createCardConsole(Context context, ViewConsolesAdmin.ConsoleResponse console, OnDeleteClickListener deleteClickListener){
+
         CardView ConsoleCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -240,7 +236,7 @@ public class GetProductsAdmin {
         cardLayout.addView(ConsolemodelTextView);
 
         TextView ConsoleStorageTextView = new TextView(context);
-        ConsoleStorageTextView.setText("Almacenamiento: " + console.getStorage());
+        ConsoleStorageTextView.setText("Almacenamiento:" + console.getStorage());
         ConsoleStorageTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(ConsoleStorageTextView);
 
@@ -250,7 +246,7 @@ public class GetProductsAdmin {
         cardLayout.addView(ConsolePriceTextView);
 
         TextView ConsoleFeaturesTextView = new TextView(context);
-        ConsoleFeaturesTextView.setText("Características: " + console.getFeatures());
+        ConsoleFeaturesTextView.setText("Caracteristicas: " + console.getStorage());
         ConsoleFeaturesTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(ConsoleFeaturesTextView);
 
@@ -264,12 +260,24 @@ public class GetProductsAdmin {
         ConsoleStockSystemTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(ConsoleStockSystemTextView);
 
-        LinearLayout buttonLayout = new LinearLayout(context);
-        LinearLayout.LayoutParams buttonLayoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
+        Button deleteButton = new Button(context);
+        deleteButton.setText("Eliminar");
+        cardLayout.addView(deleteButton);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (deleteClickListener != null) {
+                    deleteClickListener.onDeleteClicked(console);
+                }
+            }
+        });
 
         return ConsoleCardView;
     }
+
+    public interface OnDeleteClickListener<T> {
+        void onDeleteClicked(T item);
+    }
+
 }

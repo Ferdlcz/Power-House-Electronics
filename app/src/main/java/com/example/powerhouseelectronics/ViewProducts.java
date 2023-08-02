@@ -104,7 +104,7 @@ public class ViewProducts extends AppCompatActivity {
         btnViewPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewProducts.this, ViewCellPhones.class);
+                Intent intent = new Intent(ViewProducts.this, ViewCellPhonesAdmin.class);
                 startActivity(intent);
             }
         });
@@ -112,7 +112,7 @@ public class ViewProducts extends AppCompatActivity {
         btnViewConsole.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewProducts.this, ViewConsoles.class);
+                Intent intent = new Intent(ViewProducts.this, ViewConsolesAdmin.class);
                 startActivity(intent);
             }
         });
@@ -120,7 +120,7 @@ public class ViewProducts extends AppCompatActivity {
         btnViewCpu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewProducts.this, ViewComputers.class);
+                Intent intent = new Intent(ViewProducts.this, ViewComputersAdmin.class);
                 startActivity(intent);
             }
         });
