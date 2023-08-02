@@ -301,7 +301,7 @@ public class ViewComputersAdmin extends AppCompatActivity implements ProductsFil
     }
 
     public void onEditClicked(ViewComputersAdmin.CpuResponse cpu) {
-        Intent intent = new Intent(this, EditCellphone.class);
+        Intent intent = new Intent(this, EditComputers.class);
         intent.putExtra("productId", cpu.get_id());
         intent.putExtra("price", cpu.getPrice());
         intent.putExtra("stock", cpu.getStock());

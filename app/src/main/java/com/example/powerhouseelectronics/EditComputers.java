@@ -34,7 +34,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class EditCellphone extends AppCompatActivity {
+public class EditComputers extends AppCompatActivity {
 
     Toolbar toolbar;
     LinearLayout productLayout;
@@ -46,8 +46,7 @@ public class EditCellphone extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("");
-        setContentView(R.layout.activity_edit_product);
+        setContentView(R.layout.activity_edit_computers);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,9 +74,9 @@ public class EditCellphone extends AppCompatActivity {
         }
 
         txtEditPrice = findViewById(R.id.txtEditComputerPrice);
-        txtEditStock = findViewById(R.id.txtEditStock);
+        txtEditStock = findViewById(R.id.txtEditComputerStock);
 
-        Button btnEditProduct = findViewById(R.id.btnEditProduct);
+        Button btnEditProduct = findViewById(R.id.btnEditComputer);
         btnEditProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +84,7 @@ public class EditCellphone extends AppCompatActivity {
                 String newStock = txtEditStock.getText().toString();
 
                 if (TextUtils.isEmpty(newPrice) || TextUtils.isEmpty(newStock)) {
-                    Toast.makeText(EditCellphone.this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditComputers.this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -99,7 +98,7 @@ public class EditCellphone extends AppCompatActivity {
 
                 OkHttpClient client = new OkHttpClient();
 
-                String editUrl = "http://173.255.204.68/api/cellphones/" + productId;
+                String editUrl = "http://173.255.204.68/api/cpus/" + productId;
 
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), requestData.toString());
 
@@ -115,7 +114,7 @@ public class EditCellphone extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(EditCellphone.this, "Producto actualizado exitosamente", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditComputers.this, "Producto actualizado exitosamente", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             });
@@ -124,7 +123,7 @@ public class EditCellphone extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     // Mostrar mensaje de error al usuario
-                                    Toast.makeText(EditCellphone.this, "Error al actualizar el producto", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditComputers.this, "Error al actualizar el producto", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -136,7 +135,7 @@ public class EditCellphone extends AppCompatActivity {
                             @Override
                             public void run() {
                                 // Mostrar mensaje de error al usuario
-                                Toast.makeText(EditCellphone.this, "Error en la solicitud", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditComputers.this, "Error en la solicitud", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -188,12 +187,12 @@ public class EditCellphone extends AppCompatActivity {
     }
 
     private void GoProfile() {
-        Intent intent = new Intent(EditCellphone.this, Profile.class);
+        Intent intent = new Intent(EditComputers.this, Profile.class);
         startActivity(intent);
     }
 
     private void GoCarrito (){
-        Intent intent = new Intent(EditCellphone.this, Carrito.class);
+        Intent intent = new Intent(EditComputers.this, Carrito.class);
         startActivity(intent);
     }
 }
