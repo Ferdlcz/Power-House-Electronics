@@ -9,10 +9,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,24 +43,11 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
     public static final String EXTRA_USER_ID = "user_id";
     private static final int EDIT_USER_REQUEST_CODE = 1;
 
-    private String[] rolesArray = {"admin", "user"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("");
         setContentView(R.layout.activity_view_users);
-
-        Spinner roleSpinner = findViewById(R.id.role_spinner);
-
-        ArrayAdapter<String> roleAdapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_item,
-                rolesArray
-        );
-
-        roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        roleSpinner.setAdapter(roleAdapter);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -59,6 +59,15 @@ public class PanelAdmin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnViewGraphics = findViewById(R.id.btnViewGraphics);
+        btnViewGraphics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PanelAdmin.this, Estadisticas.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
