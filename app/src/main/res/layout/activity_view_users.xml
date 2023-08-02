@@ -44,6 +44,24 @@
 
             <!-- Spinner para filtrar por rol -->
 
+            <EditText
+                android:id="@+id/txtFindUser"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:hint="Buscar usuario"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/btnFindUser"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="#5110C3"
+                android:text="Buscar usuario"
+                android:textColor="#FFFFFF" />
+
             <Button
                 android:id="@+id/btnRegUser"
                 android:layout_width="279dp"

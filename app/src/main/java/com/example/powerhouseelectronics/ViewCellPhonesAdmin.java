@@ -40,6 +40,7 @@ public class ViewCellPhonesAdmin extends AppCompatActivity implements ProductsFi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("");
         setContentView(R.layout.activity_view_cell_phones_admin);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

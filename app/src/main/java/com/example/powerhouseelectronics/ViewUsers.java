@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,9 @@ import androidx.cardview.widget.CardView;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -78,7 +82,86 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
                 startActivity(intent);
             }
         });
+
+        Button btnFindUser = findViewById(R.id.btnFindUser);
+        EditText txtFindUser = findViewById(R.id.txtFindUser);
+
+        btnFindUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchString = txtFindUser.getText().toString().trim();
+                if (!searchString.isEmpty()) {
+                    searchUsers(searchString);
+                } else {
+
+                }
+            }
+        });
     }
+
+    private void searchUsers(String searchTerm) {
+        OkHttpClient client = new OkHttpClient();
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("name", searchTerm);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        RequestBody requestBody = RequestBody.create(jsonObject.toString(), MediaType.parse("application/json"));
+
+        Request request = new Request.Builder()
+                .url("http://173.255.204.68/api/users/admin?")
+                .post(requestBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String jsonData = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mostrarUsuarios(jsonData);
+                        }
+                    });
+                } else {
+                }
+
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            String jsonData = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    userLayout.removeAllViews();
+                                    mostrarUsuarios(jsonData);
+                                }
+                            });
+                        } else {
+                            // Manejar la respuesta no exitosa.
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     private void loadUsersFromServer() {
         OkHttpClient client = new OkHttpClient();
 
