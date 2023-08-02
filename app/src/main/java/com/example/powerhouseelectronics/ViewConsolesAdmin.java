@@ -278,7 +278,7 @@ public class ViewConsolesAdmin extends AppCompatActivity  implements ProductsFil
     }
 
     public void onEditClicked(ViewConsolesAdmin.ConsoleResponse console) {
-        Intent intent = new Intent(this, EditCellphone.class);
+        Intent intent = new Intent(this, EditConsoles.class);
         intent.putExtra("productId", console.get_id());
         intent.putExtra("price", console.getPrice());
         intent.putExtra("stock", console.getStock());
