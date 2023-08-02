@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso;
 public class ProductsFilterAdmin {
 
     //CARD PARA CELULARES
-    public static CardView createCardPhone(Context context, ViewCellPhonesAdmin.PhoneResponse phone, OnDeleteClickListener deleteClickListener){
+    public static CardView createCardPhone(Context context, ViewCellPhonesAdmin.PhoneResponse phone, OnDeleteClickListener deleteClickListener, OnEditClickListener editClickListener){
 
         CardView PhoneCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
@@ -98,12 +98,25 @@ public class ProductsFilterAdmin {
             }
         });
 
+        Button editButton = new Button(context);
+        editButton.setText("Editar");
+        cardLayout.addView(editButton);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editClickListener != null) {
+                    editClickListener.onEditClicked(phone);
+                }
+            }
+        });
+
         return PhoneCardView;
     }
 
 
     //CARDS DE COMPUTADORAS
-    public static CardView createCardCpu(Context context, ViewComputersAdmin.CpuResponse cpu, OnDeleteClickListener deleteClickListener){
+    public static CardView createCardCpu(Context context, ViewComputersAdmin.CpuResponse cpu, OnDeleteClickListener deleteClickListener, OnEditClickListener editClickListener){
 
         CardView CpuCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
@@ -191,11 +204,23 @@ public class ProductsFilterAdmin {
             }
         });
 
+        Button editButton = new Button(context);
+        editButton.setText("Editar");
+        cardLayout.addView(editButton);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editClickListener != null) {
+                    editClickListener.onEditClicked(cpu);
+                }
+            }
+        });
 
         return CpuCardView;
     }
 
-    public static CardView createCardConsole(Context context, ViewConsolesAdmin.ConsoleResponse console, OnDeleteClickListener deleteClickListener){
+    public static CardView createCardConsole(Context context, ViewConsolesAdmin.ConsoleResponse console, OnDeleteClickListener deleteClickListener, OnEditClickListener editClickListener){
 
         CardView ConsoleCardView = new CardView(context);
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
@@ -273,11 +298,28 @@ public class ProductsFilterAdmin {
             }
         });
 
+        Button editButton = new Button(context);
+        editButton.setText("Editar");
+        cardLayout.addView(editButton);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editClickListener != null) {
+                    editClickListener.onEditClicked(console);
+                }
+            }
+        });
+
         return ConsoleCardView;
     }
 
     public interface OnDeleteClickListener<T> {
         void onDeleteClicked(T item);
+    }
+
+    public interface OnEditClickListener<T> {
+        void onEditClicked(T item);
     }
 
 }

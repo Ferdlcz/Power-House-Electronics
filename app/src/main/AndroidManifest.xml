@@ -39,7 +39,7 @@
             android:name=".Carrito"
             android:exported="false" />
         <activity
-            android:name=".editProduct"
+            android:name=".EditCellphone"
             android:exported="false" />
         <activity
             android:name=".ViewCellPhones"

@@ -32,7 +32,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ViewConsolesAdmin extends AppCompatActivity  implements ProductsFilterAdmin.OnDeleteClickListener<ViewConsolesAdmin.ConsoleResponse> {
+public class ViewConsolesAdmin extends AppCompatActivity  implements ProductsFilterAdmin.OnDeleteClickListener<ViewConsolesAdmin.ConsoleResponse>,
+        ProductsFilterAdmin.OnEditClickListener<ViewConsolesAdmin.ConsoleResponse> {
 
     Toolbar toolbar;
     LinearLayout productLayout;
@@ -105,7 +106,7 @@ public class ViewConsolesAdmin extends AppCompatActivity  implements ProductsFil
                 String consoleJson = gson.toJson(gameConsoles);
                 Log.d("CONSOLES_JSON", consoleJson);
 
-                CardView consoleCard = ProductsFilterAdmin.createCardConsole(this, gameConsoles, this);
+                CardView consoleCard = ProductsFilterAdmin.createCardConsole(this, gameConsoles, this, this);
                 productLayout.addView(consoleCard);
             }
         } else {
@@ -274,6 +275,14 @@ public class ViewConsolesAdmin extends AppCompatActivity  implements ProductsFil
                 Log.e("DELETE_CONSOLE", "Error en la solicitud DELETE", e);
             }
         });
+    }
+
+    public void onEditClicked(ViewConsolesAdmin.ConsoleResponse console) {
+        Intent intent = new Intent(this, EditCellphone.class);
+        intent.putExtra("productId", console.get_id());
+        intent.putExtra("price", console.getPrice());
+        intent.putExtra("stock", console.getStock());
+        startActivity(intent);
     }
 
 

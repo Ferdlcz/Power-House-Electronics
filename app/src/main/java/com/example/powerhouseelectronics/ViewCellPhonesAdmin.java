@@ -32,7 +32,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ViewCellPhonesAdmin extends AppCompatActivity implements ProductsFilterAdmin.OnDeleteClickListener<ViewCellPhonesAdmin.PhoneResponse>{
+public class ViewCellPhonesAdmin extends AppCompatActivity implements ProductsFilterAdmin.OnDeleteClickListener<ViewCellPhonesAdmin.PhoneResponse>,
+        ProductsFilterAdmin.OnEditClickListener<ViewCellPhonesAdmin.PhoneResponse> {
 
     Toolbar toolbar;
     LinearLayout productLayout;
@@ -106,7 +107,7 @@ public class ViewCellPhonesAdmin extends AppCompatActivity implements ProductsFi
                 String phoneJson = gson.toJson(cellPhones);
                 Log.d("PHONES_JSON", phoneJson);
 
-                CardView phoneCard = ProductsFilterAdmin.createCardPhone(this, cellPhones, this);
+                CardView phoneCard = ProductsFilterAdmin.createCardPhone(this, cellPhones, this, this);
                 productLayout.addView(phoneCard);
             }
         } else {
@@ -287,6 +288,14 @@ public class ViewCellPhonesAdmin extends AppCompatActivity implements ProductsFi
                 Log.e("DELETE_CONSOLE", "Error en la solicitud DELETE", e);
             }
         });
+    }
+
+    public void onEditClicked(ViewCellPhonesAdmin.PhoneResponse phone) {
+        Intent intent = new Intent(this, EditCellphone.class);
+        intent.putExtra("productId", phone.get_id());
+        intent.putExtra("price", phone.getPrice());
+        intent.putExtra("stock", phone.getStock());
+        startActivity(intent);
     }
 
     //Toolbar y metodos de cierre de sesion
