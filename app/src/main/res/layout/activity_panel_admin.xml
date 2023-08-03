@@ -40,7 +40,7 @@
         app:layout_constraintVertical_bias="0.038" />
 
     <Button
-        android:id="@+id/btnViewPedidos"
+        android:id="@+id/btnViewOrders"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#5110C3"
@@ -51,27 +51,12 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnViewProducts"
-        app:layout_constraintVertical_bias="0.054" />
-
-    <Button
-        android:id="@+id/btnViewLogs"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#5110C3"
-        android:text="Ver Logs"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewPedidos"
-        app:layout_constraintVertical_bias="0.047" />
+        app:layout_constraintVertical_bias="0.039" />
 
     <Button
         android:id="@+id/btnViewGraphics"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
         android:backgroundTint="#5110C3"
         android:text="Ver Estadisticas"
         android:textColor="#FFFFFF"
@@ -79,8 +64,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnViewLogs"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/btnViewOrders"
+        app:layout_constraintVertical_bias="0.038" />
 
     <TextView
         android:id="@+id/textView4"

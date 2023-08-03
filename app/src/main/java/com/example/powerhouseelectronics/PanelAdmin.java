@@ -68,6 +68,15 @@ public class PanelAdmin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btnViewOrders = findViewById(R.id.btnViewOrders);
+        btnViewOrders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PanelAdmin.this, Pedidos.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
