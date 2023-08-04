@@ -3,6 +3,7 @@ package com.example.powerhouseelectronics;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -77,18 +78,21 @@ public class Carrito extends AppCompatActivity {
 
                 TextView brandTextView = new TextView(this);
                 brandTextView.setText(product.getBrand());
+                brandTextView.setTextColor(Color.BLACK);
                 brandTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,(100)));
                 brandTextView.setBackgroundResource(R.drawable.table_cell_border);
                 row.addView(brandTextView);
 
                 TextView modelTextView = new TextView(this);
                 modelTextView.setText(product.getModel());
+                modelTextView.setTextColor(Color.BLACK);
                 modelTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,(100)));
                 modelTextView.setBackgroundResource(R.drawable.table_cell_border);
                 row.addView(modelTextView);
 
                 TextView priceTextView = new TextView(this);
                 priceTextView.setText(product.getPrice());
+                priceTextView.setTextColor(Color.BLACK);
                 priceTextView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,(100)));
                 priceTextView.setBackgroundResource(R.drawable.table_cell_border);
                 row.addView(priceTextView);

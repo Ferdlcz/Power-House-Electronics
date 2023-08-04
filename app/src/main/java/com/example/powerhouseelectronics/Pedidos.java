@@ -2,6 +2,8 @@ package com.example.powerhouseelectronics;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.squareup.picasso.Picasso;
 
@@ -52,6 +55,8 @@ public class Pedidos extends AppCompatActivity {
 
         String userImageURL = sharedPreferences.getString("image", "");
 
+        Drawable cellBackground = ContextCompat.getDrawable(this, R.drawable.table_cell_border);
+
         Picasso.with(this)
                 .load(userImageURL)
                 .into(userProfileImageView);
@@ -84,10 +89,16 @@ public class Pedidos extends AppCompatActivity {
                                 TableRow headerRow = new TableRow(Pedidos.this);
                                 TextView idHeader = new TextView(Pedidos.this);
                                 idHeader.setText("ID");
+                                idHeader.setBackground(cellBackground);
+                                idHeader.setTextColor(Color.BLACK);
                                 TextView totalHeader = new TextView(Pedidos.this);
                                 totalHeader.setText("Total");
+                                totalHeader.setTextColor(Color.BLACK);
+                                totalHeader.setBackground(cellBackground);
                                 TextView statusHeader = new TextView(Pedidos.this);
                                 statusHeader.setText("Status");
+                                statusHeader.setTextColor(Color.BLACK);
+                                statusHeader.setBackground(cellBackground);
                                 headerRow.addView(idHeader);
                                 headerRow.addView(totalHeader);
                                 headerRow.addView(statusHeader);
@@ -104,10 +115,16 @@ public class Pedidos extends AppCompatActivity {
                                         TableRow row = new TableRow(Pedidos.this);
                                         TextView idTextView = new TextView(Pedidos.this);
                                         idTextView.setText(orderId);
+                                        idTextView.setBackground(cellBackground);
+                                        idTextView.setTextColor(Color.BLACK);
                                         TextView totalTextView = new TextView(Pedidos.this);
                                         totalTextView.setText(orderTotal);
+                                        totalTextView.setBackground(cellBackground);
+                                        totalTextView.setTextColor(Color.BLACK);
                                         TextView statusTextView = new TextView(Pedidos.this);
                                         statusTextView.setText(orderStatus);
+                                        statusTextView.setBackground(cellBackground);
+                                        statusTextView.setTextColor(Color.BLACK);
 
                                         row.addView(idTextView);
                                         row.addView(totalTextView);

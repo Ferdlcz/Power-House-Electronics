@@ -11,32 +11,38 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <TableLayout
-        android:id="@+id/table_layout"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="450dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0.077">
+        app:layout_constraintVertical_bias="0.006">
 
-        <!-- Encabezado de la tabla (se agregará dinámicamente en el código Java) -->
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Pedidos"
+            android:textColor="#000000"
+            android:textSize="20sp" />
 
-    </TableLayout>
+        <TableLayout
+            android:id="@+id/table_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pedidos"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/table_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.179" />
+            <!-- Encabezado de la tabla (se agregará dinámicamente en el código Java) -->
+
+        </TableLayout>
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

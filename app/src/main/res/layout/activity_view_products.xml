@@ -65,6 +65,12 @@
                     android:text="Agregar Consola"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp" />
+            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnViewCpu"
@@ -92,8 +98,9 @@
                     android:text="Ver Consolas"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="16dp" />
+                </LinearLayout>
 
-            </LinearLayout>
+
 
             <!-- Aquí se agregarán las tarjetas de usuario dinámicamente -->
 
