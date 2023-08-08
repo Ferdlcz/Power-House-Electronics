@@ -36,7 +36,17 @@ import okhttp3.Response;
 
 
 
-public class EditConsoles extends AppCompatActivity {
+public class EditConsoles extends AppCompatActivity implements CustomAlert.OnDialogCloseListener{
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(EditConsoles.this, ViewProducts.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onDialogClose() {
+        navigateToMainActivity();
+    }
 
     Toolbar toolbar;
 
@@ -88,7 +98,8 @@ public class EditConsoles extends AppCompatActivity {
                 String newStock = txtEditStock.getText().toString();
 
                 if (TextUtils.isEmpty(newPrice) || TextUtils.isEmpty(newStock)) {
-                    Toast.makeText(EditConsoles.this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(EditConsoles.this, "Error", "Por favor completa todos los campos " ));
+                 //   Toast.makeText(EditConsoles.this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -118,7 +129,10 @@ public class EditConsoles extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(EditConsoles.this, "Producto actualizado exitosamente", Toast.LENGTH_SHORT).show();
+                                    runOnUiThread(() -> {
+                                        CustomAlert.showCustomSuccessDialog(EditConsoles.this, "¡Actualizacion exitosa!", "Producto actualizado exitosamente", EditConsoles.this);
+                                    });
+                                   // Toast.makeText(EditConsoles.this, "Producto actualizado exitosamente", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             });
@@ -126,7 +140,8 @@ public class EditConsoles extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(EditConsoles.this, "Error al actualizar el producto", Toast.LENGTH_SHORT).show();
+                                    runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(EditConsoles.this, "Error", "El stock no puede ser menor al inicial " ));
+                                   // Toast.makeText(EditConsoles.this, "Error al actualizar el producto", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }

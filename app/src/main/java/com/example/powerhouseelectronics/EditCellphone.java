@@ -34,8 +34,17 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class EditCellphone extends AppCompatActivity {
+public class EditCellphone extends AppCompatActivity implements CustomAlert.OnDialogCloseListener{
 
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(EditCellphone.this, ViewProducts.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onDialogClose() {
+        navigateToMainActivity();
+    }
     Toolbar toolbar;
     LinearLayout productLayout;
 
@@ -85,7 +94,7 @@ public class EditCellphone extends AppCompatActivity {
                 String newStock = txtEditStock.getText().toString();
 
                 if (TextUtils.isEmpty(newPrice) || TextUtils.isEmpty(newStock)) {
-                    Toast.makeText(EditCellphone.this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(EditCellphone.this, "Error", "Por favor completa todos los campos " ));
                     return;
                 }
 
@@ -115,7 +124,10 @@ public class EditCellphone extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(EditCellphone.this, "Producto actualizado exitosamente", Toast.LENGTH_SHORT).show();
+                                    runOnUiThread(() -> {
+                                        CustomAlert.showCustomSuccessDialog(EditCellphone.this, "¡Actualizacion exitosa!", "Producto actualizado exitosamente", EditCellphone.this);
+                                    });
+                                    //Toast.makeText(EditCellphone.this, "Producto actualizado exitosamente", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             });
@@ -123,8 +135,8 @@ public class EditCellphone extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    // Mostrar mensaje de error al usuario
-                                    Toast.makeText(EditCellphone.this, "Error al actualizar el producto", Toast.LENGTH_SHORT).show();
+                                    runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(EditCellphone.this, "Error", "El stock no puede ser menor al inicial " ));
+                                    //Toast.makeText(EditCellphone.this, "Error al actualizar el producto", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }

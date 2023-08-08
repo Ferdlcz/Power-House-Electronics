@@ -34,7 +34,17 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class EditComputers extends AppCompatActivity {
+public class EditComputers extends AppCompatActivity implements CustomAlert.OnDialogCloseListener{
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(EditComputers.this, ViewProducts.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onDialogClose() {
+        navigateToMainActivity();
+    }
 
     Toolbar toolbar;
     LinearLayout productLayout;
@@ -84,7 +94,8 @@ public class EditComputers extends AppCompatActivity {
                 String newStock = txtEditStock.getText().toString();
 
                 if (TextUtils.isEmpty(newPrice) || TextUtils.isEmpty(newStock)) {
-                    Toast.makeText(EditComputers.this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(EditComputers.this, "Error", "Por favor completa todos los campos " ));
+                    //Toast.makeText(EditComputers.this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -114,7 +125,10 @@ public class EditComputers extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(EditComputers.this, "Producto actualizado exitosamente", Toast.LENGTH_SHORT).show();
+                                    runOnUiThread(() -> {
+                                        CustomAlert.showCustomSuccessDialog(EditComputers.this, "¡Actualizacion exitosa!", "Producto actualizado exitosamente", EditComputers.this);
+                                    });
+                                    //Toast.makeText(EditComputers.this, "Producto actualizado exitosamente", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
                             });
@@ -122,8 +136,9 @@ public class EditComputers extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    // Mostrar mensaje de error al usuario
-                                    Toast.makeText(EditComputers.this, "Error al actualizar el producto", Toast.LENGTH_SHORT).show();
+                                    runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(EditComputers.this, "Error", "El stock no puede ser menor al inicial " ));
+
+                                 //   Toast.makeText(EditComputers.this, "Error al actualizar el producto", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
