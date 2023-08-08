@@ -23,24 +23,50 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CustomAlert.OnDialogCloseListener {
+
+    private String role;
+    private CustomAlert.OnDialogCloseListener dialogCloseListener = new CustomAlert.OnDialogCloseListener() {
+        @Override
+        public void onDialogClose() {
+
+            navigateToNextActivity(role);
+        }
+    };
+
+    @Override
+    public void onDialogClose() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
+        String role = sharedPreferences.getString("role", "");
+
+        if ("user".equals(role)) {
+            Intent intent = new Intent(MainActivity.this, Index.class);
+            startActivity(intent);
+        } else if ("admin".equals(role) || "superadmin".equals(role)) {
+            Intent intent = new Intent(MainActivity.this, PanelAdmin.class);
+            startActivity(intent);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         EditText SendEmail = findViewById(R.id.txtEmailLog);
         EditText SendPassword = findViewById(R.id.txtPassLog);
         Button btnRedireccionRegistro = findViewById(R.id.btnRegistro);
         Button btnIniciarSesion = findViewById(R.id.btnLogin);
-        btnRedireccionRegistro.setOnClickListener(new View.OnClickListener(){
+
+        btnRedireccionRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, UserRegister.class);
                 startActivity(intent);
             }
         });
+
         btnIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void Login(String email, String password) {
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = new FormBody.Builder()
@@ -64,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                runOnUiThread(() -> showErrorAlertDialog("Error al hacer la solicitud: " + e.getMessage()));
+                runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(MainActivity.this, "Error", "Error al hacer la solicitud: " + e.getMessage()));
             }
 
             @Override
@@ -76,14 +103,11 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             JSONObject jsonObject = new JSONObject(responseData);
                             String role = jsonObject.getJSONObject("user").getString("role");
-                            String userId = jsonObject.getJSONObject("user").getString("_id");
-                            String token = jsonObject.getString("token");
 
                             SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("token", token);
-                            editor.putString("id", userId);
-
+                            editor.putString("token", jsonObject.getString("token"));
+                            editor.putString("id", jsonObject.getJSONObject("user").getString("_id"));
 
                             JSONObject userObject = jsonObject.getJSONObject("user");
                             editor.putString("name", userObject.getString("name"));
@@ -95,30 +119,31 @@ public class MainActivity extends AppCompatActivity {
 
                             editor.apply();
 
-                            if (role.equals("user")) {
-                                Intent intent = new Intent(MainActivity.this, Index.class);
-                                startActivity(intent);
-                            } else if (role.equals("admin") || role.equals("superadmin")) {
-                                Intent intent = new Intent(MainActivity.this, PanelAdmin.class);
-                                startActivity(intent);
-                            }
+                            runOnUiThread(() -> {
+                                CustomAlert.showCustomSuccessDialog(MainActivity.this, "¡Inicio de sesión exitoso!", "Has iniciado sesión correctamente", new CustomAlert.OnDialogCloseListener() {
+                                    @Override
+                                    public void onDialogClose() {
+                                        navigateToNextActivity(role);
+                                    }
+                                });
+                            });
 
                         } catch (JSONException e) {
-                            runOnUiThread(() -> showErrorAlertDialog("Error al analizar la respuesta JSON: " + e.getMessage()));
+                            runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(MainActivity.this, "Error", "Error al analizar la respuesta JSON: " + e.getMessage()));
                         }
                     } else {
                         if (response.code() == 401 || response.code() == 403) {
                             EliminarToken();
                             runOnUiThread(() -> {
-                                showErrorAlertDialog("Tu sesión ha expirado. Por favor, inicia sesión nuevamente.");
+                                CustomErrorAlert.showCustomErrorDialog(MainActivity.this, "Error", "Tu sesión ha expirado. Por favor, inicia sesión nuevamente.");
                                 logout();
                             });
                         } else {
-                            runOnUiThread(() -> showErrorAlertDialog("Email o contraseña incorrectos. Intenta nuevamente!! "));
+                            runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(MainActivity.this, "Error", "Email o contraseña incorrectos. Intenta nuevamente!! "));
                         }
                     }
                 } catch (IOException e) {
-                    runOnUiThread(() -> showErrorAlertDialog("Error al obtener la respuesta: " + e.getMessage()));
+                    runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(MainActivity.this, "Error", "Error al obtener la respuesta: " + e.getMessage()));
                 }
             }
         });
@@ -131,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", null);
         builder.show();
     }
+
     private void EliminarToken() {
         SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -138,11 +164,22 @@ public class MainActivity extends AppCompatActivity {
         editor.clear();
         editor.apply();
     }
+
     private void logout() {
         EliminarToken();
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
+    }
+
+    private void navigateToNextActivity(String role) {
+        if (role.equals("user")) {
+            Intent intent = new Intent(MainActivity.this, Index.class);
+            startActivity(intent);
+        } else if (role.equals("admin") || role.equals("superadmin")) {
+            Intent intent = new Intent(MainActivity.this, PanelAdmin.class);
+            startActivity(intent);
+        }
     }
 }

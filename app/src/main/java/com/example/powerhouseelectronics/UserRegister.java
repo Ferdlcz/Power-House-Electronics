@@ -1,5 +1,6 @@
 package com.example.powerhouseelectronics;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,8 +18,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserRegister extends AppCompatActivity {
+public class UserRegister extends AppCompatActivity implements CustomAlert.OnDialogCloseListener {
 
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(UserRegister.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onDialogClose() {
+        // Implementa aquí la lógica para redirigir a MainActivity
+        navigateToMainActivity();
+    }
 
     UsersClass user;
     Button btnRegistrar;
@@ -75,11 +86,15 @@ public class UserRegister extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
+                    runOnUiThread(() -> {
+                        CustomAlert.showCustomSuccessDialog(UserRegister.this, "¡Registro exitoso!", "Usuario registrado correctamente", UserRegister.this);
+                    });
                     Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
                         String errorResponse = response.errorBody().string();
-                        Toast.makeText(getApplicationContext(), "Error en el registro: " + errorResponse, Toast.LENGTH_SHORT).show();
+                        runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(UserRegister.this, "Error", "Error en el registro: " + errorResponse));
+                        //Toast.makeText(getApplicationContext(), "Error en el registro: " + errorResponse, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
