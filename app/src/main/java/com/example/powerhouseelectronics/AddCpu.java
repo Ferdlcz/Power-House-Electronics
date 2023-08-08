@@ -39,7 +39,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddCpu extends AppCompatActivity {
+public class AddCpu extends AppCompatActivity implements CustomAlert.OnDialogCloseListener{
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(AddCpu.this, ViewProducts.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onDialogClose() {
+        navigateToMainActivity();
+    }
 
     Toolbar toolbar;
 
@@ -156,7 +166,8 @@ public class AddCpu extends AppCompatActivity {
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent, "Selecciona la aplicación"), 10);
             } else {
-                Toast.makeText(this, "Permiso de lectura del almacenamiento externo denegado.", Toast.LENGTH_SHORT).show();
+                runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(AddCpu.this, "Error", "Permiso de acceso almacenamiento denegado. " ));
+                //Toast.makeText(this, "Permiso de lectura del almacenamiento externo denegado.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -219,13 +230,17 @@ public class AddCpu extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> {
+                        CustomAlert.showCustomSuccessDialog(AddCpu.this, "¡Registro exitoso!", "Producto registrado correctamente", AddCpu.this);
+                    });
+                   // Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
                         String errorResponse = response.errorBody().string();
-                        Toast.makeText(getApplicationContext(), "Error en el registro: " + errorResponse, Toast.LENGTH_SHORT).show();
+                        runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(AddCpu.this, "Error", "Error en el registro: " + errorResponse));
+                      /*  Toast.makeText(getApplicationContext(), "Error en el registro: " + errorResponse, Toast.LENGTH_SHORT).show();
                         Log.e("API_CALL_ERROR", errorResponse);
-                        Log.d("API_CALL_URL", call.request().url().toString());
+                        Log.d("API_CALL_URL", call.request().url().toString());*/
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
