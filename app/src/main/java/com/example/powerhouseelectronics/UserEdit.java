@@ -1,6 +1,6 @@
 package com.example.powerhouseelectronics;
 //usuarios normales
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,7 +31,17 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class UserEdit extends AppCompatActivity {
+public class UserEdit extends AppCompatActivity implements CustomAlert.OnDialogCloseListener{
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(UserEdit.this, Index.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onDialogClose() {
+        navigateToMainActivity();
+    }
 
     Toolbar toolbar;
     String modifierId;
@@ -79,7 +89,6 @@ public class UserEdit extends AppCompatActivity {
         EditText addressEditText = findViewById(R.id.editTextAddress);
         addressEditText.setText(address);
 
-        // Display user image using Picasso
         ImageView imageView = findViewById(R.id.imageView4);
         Picasso.with(this)
                 .load(image)
@@ -94,8 +103,6 @@ public class UserEdit extends AppCompatActivity {
         });
 
     }
-
-
 
     private void updateUserInformation() {
 
@@ -133,7 +140,11 @@ public class UserEdit extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    Log.d("USER_UPDATE", "Actualización exitosa");
+
+                    runOnUiThread(() -> {
+                        CustomAlert.showCustomSuccessDialog(UserEdit.this, "¡Actualizacion exitosa!", "Usuario actualizado exitosamente", UserEdit.this);
+                    });
+                    //Log.d("USER_UPDATE", "Actualización exitosa");
 
                     SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -145,7 +156,8 @@ public class UserEdit extends AppCompatActivity {
 
                     finish();
                 } else {
-                    Log.d("USER_UPDATE", "Error al actualizar: " + response.code());
+                    runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(UserEdit.this, "Error", "Se ha producido un error al actualizar usuario: " + response.code() ));
+                    //Log.d("USER_UPDATE", "Error al actualizar: " + response.code());
                 }
             }
 

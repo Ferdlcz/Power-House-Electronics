@@ -1,7 +1,6 @@
 package com.example.powerhouseelectronics;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -45,8 +43,17 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class Profile extends AppCompatActivity {
+public class Profile extends AppCompatActivity implements CustomAlert.OnDialogCloseListener{
 
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(Profile.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onDialogClose() {
+        navigateToMainActivity();
+    }
     Toolbar toolbar;
     Button btnDeleteAcc;
 
@@ -180,17 +187,12 @@ public class Profile extends AppCompatActivity {
     }
 
     private void AlertConfirm() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Eliminar cuenta");
-        builder.setMessage("¿Estás seguro de que deseas eliminar tu cuenta?");
-        builder.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+        CustomConfirmAlert.showCustomClearCartDialog(this, new CustomConfirmAlert.OnDialogCloseListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onDialogClose() {
                 deleteUserAccount();
             }
         });
-        builder.setNegativeButton("Cancelar", null);
-        builder.show();
     }
 
     private void deleteUserAccount() {
@@ -213,9 +215,13 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    Log.d("USER_DELETE", "Usuario eliminado correctamente");
+                    runOnUiThread(() -> {
+                        CustomAlert.showCustomSuccessDialog(Profile.this, "¡Usuario ELiminado!", "Cuenta eliminada correctamente", Profile.this);
+                    });
+                    //Log.d("USER_DELETE", "Usuario eliminado correctamente");
                 } else {
-                    Log.d("USER_DELETE", "Error al eliminar usuario: " + response.code());
+                    runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(Profile.this, "Error", "Error al eliminar usuario: " + response.code()));
+                    //Log.d("USER_DELETE", "Error al eliminar usuario: " + response.code());
                 }
             }
 
@@ -344,17 +350,12 @@ public class Profile extends AppCompatActivity {
     }
 
     private void showConfirmationAlert(final String imagePath) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Actualizar imagen");
-        builder.setMessage("Los cambios se veran reflejados una vez que cierres e inicies sesion!! ¿Deseas guardar esta imagen como tu nueva foto de perfil?");
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        CustomConfirmAlert.showCustomClearCartDialog(this, new CustomConfirmAlert.OnDialogCloseListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onDialogClose() {
                 UpdateProfileImage(imagePath);
             }
         });
-        builder.setNegativeButton("Cancelar", null);
-        builder.show();
     }
 
     private String obtenerRutaImg() {

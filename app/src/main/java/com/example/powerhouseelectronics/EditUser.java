@@ -30,8 +30,17 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class EditUser extends AppCompatActivity {
+public class EditUser extends AppCompatActivity implements CustomAlert.OnDialogCloseListener{
 
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(EditUser.this, ViewUsers.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onDialogClose() {
+        navigateToMainActivity();
+    }
     Toolbar toolbar;
     String modifierId;
     String userId;
@@ -73,7 +82,6 @@ public class EditUser extends AppCompatActivity {
 
             EditText emailEditText = findViewById(R.id.editTextEmail);
             emailEditText.setText(user.getEmail());
-
             EditText phoneEditText = findViewById(R.id.editTextPhone);
             phoneEditText.setText(user.getPhone());
 
@@ -131,10 +139,15 @@ public class EditUser extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    Log.d("USER_UPDATE", "Actualización exitosa");
-                    finish();
+                    runOnUiThread(() -> {
+                        CustomAlert.showCustomSuccessDialog(EditUser.this, "¡Actualizacion exitosa!", "Usuario actualizado exitosamente", EditUser.this);
+                        finish();
+                    });
+                    //Log.d("USER_UPDATE", "Actualización exitosa");
+
                 } else {
-                    Log.d("USER_UPDATE", "Error al actualizar: " + response.code());
+                    runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(EditUser.this, "Error", "Se ha producido un error al actualizar usuario: " + response.code() ));
+                    //Log.d("USER_UPDATE", "Error al actualizar: " + response.code());
                 }
             }
 

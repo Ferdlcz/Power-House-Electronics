@@ -44,7 +44,7 @@ public class CustomConfirmAlert {
         layout.addView(titleView);
 
         TextView messageView = new TextView(context);
-        messageView.setText("¿Estás seguro de que deseas vaciar el carrito?");
+        messageView.setText("¿Estás seguro de realizar esta accion?");
         messageView.setTextColor(context.getResources().getColor(R.color.customAlertMessage));
         messageView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         messageView.setPadding(0, 0, 0, 20);
