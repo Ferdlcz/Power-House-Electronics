@@ -188,6 +188,12 @@ public class AddCpu extends AppCompatActivity {
         return null;
     }
     private void EnviarProductos(CpuClass Cpus) {
+
+        if (Cpus.getImage() == null) {
+            CustomErrorAlert.showCustomErrorDialog(AddCpu.this, "Error", "Debes seleccionar una imagen.");
+            return;
+        }
+
         Api api = ApiUrl.getRetrofitInstance().create(Api.class);
 
         File imageFile = new File(Cpus.getImage());

@@ -27,7 +27,6 @@ public class UserRegister extends AppCompatActivity implements CustomAlert.OnDia
     }
     @Override
     public void onDialogClose() {
-        // Implementa aquí la lógica para redirigir a MainActivity
         navigateToMainActivity();
     }
 
@@ -89,7 +88,7 @@ public class UserRegister extends AppCompatActivity implements CustomAlert.OnDia
                     runOnUiThread(() -> {
                         CustomAlert.showCustomSuccessDialog(UserRegister.this, "¡Registro exitoso!", "Usuario registrado correctamente", UserRegister.this);
                     });
-                    Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
                         String errorResponse = response.errorBody().string();

@@ -187,6 +187,12 @@ public class AddPhone extends AppCompatActivity {
         }
 
     private void EnviarProductos(PhoneClass products) {
+
+        if (products.getImage() == null) {
+            CustomErrorAlert.showCustomErrorDialog(AddPhone.this, "Error", "Debes seleccionar una imagen.");
+            return;
+        }
+
         Api api = ApiUrl.getRetrofitInstance().create(Api.class);
 
         File imageFile = new File(products.getImage());
