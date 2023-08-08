@@ -1,6 +1,5 @@
 package com.example.powerhouseelectronics;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -40,7 +38,17 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClickListener, GetUsers.OnDeleteClickListener {
+public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClickListener, GetUsers.OnDeleteClickListener, CustomAlert.OnDialogCloseListener {
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(ViewUsers.this, ViewUsers.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onDialogClose() {
+        navigateToMainActivity();
+    }
     LinearLayout userLayout;
     Toolbar toolbar;
 
@@ -223,18 +231,12 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
     }
 
     public void onDeleteClicked(ViewUsers.UserResponse user) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Eliminar Usuario");
-        builder.setMessage("¿Está seguro de que desea eliminar este usuario?");
-        builder.setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+        CustomConfirmAlert.showCustomClearCartDialog(this, new CustomConfirmAlert.OnDialogCloseListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onDialogClose() {
                 deleteUser(user.get_id());
             }
         });
-        builder.setNegativeButton("Cancelar", null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
     private void deleteUser(String userId) {
@@ -257,9 +259,14 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    Log.d("USER_DELETE", "Usuario eliminado correctamente");
+                    runOnUiThread(() -> {
+                        CustomAlert.showCustomSuccessDialog(ViewUsers.this, "¡Eliminacion correcta!", "Usuario eliminado correctamente", ViewUsers.this);
+                    });
+                    //Log.d("USER_DELETE", "Usuario eliminado correctamente");
                 } else {
-                    Log.d("USER_DELETE", "Error al eliminar usuario: " + response.code());
+                    runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(ViewUsers.this, "Error", "Error al eliminar usuario: " + response.code()));
+
+                    //Log.d("USER_DELETE", "Error al eliminar usuario: " + response.code());
                 }
             }
 
