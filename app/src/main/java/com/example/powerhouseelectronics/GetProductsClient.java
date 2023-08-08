@@ -185,12 +185,12 @@ public class GetProductsClient {
         cardLayout.addView(CpuPriceTextView);
 
         TextView CpuOperatingSystemTextView = new TextView(context);
-        CpuOperatingSystemTextView.setText("Sistema Operativo: " + cpu.getOperatingSystem());
+        CpuOperatingSystemTextView.setText("Tarjeta Grafica: " + cpu.getOperatingSystem());
         CpuOperatingSystemTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(CpuOperatingSystemTextView);
 
         TextView CpuGraphicsCardTextView = new TextView(context);
-        CpuGraphicsCardTextView.setText("Tarjeta Grafica: " + cpu.getGraphicsCard());
+        CpuGraphicsCardTextView.setText("Sistema Operativo: " + cpu.getGraphicsCard());
         CpuGraphicsCardTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 22);
         cardLayout.addView(CpuGraphicsCardTextView);
 
