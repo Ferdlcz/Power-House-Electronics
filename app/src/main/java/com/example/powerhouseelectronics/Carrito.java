@@ -38,7 +38,17 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class Carrito extends AppCompatActivity {
+public class Carrito extends AppCompatActivity implements CustomAlert.OnDialogCloseListener{
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(Carrito.this, Index.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onDialogClose() {
+        navigateToMainActivity();
+    }
 
     Toolbar toolbar;
 
@@ -114,17 +124,23 @@ public class Carrito extends AppCompatActivity {
 
         Button clearCartButton = findViewById(R.id.ClearCart);
 
+
         clearCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getSharedPreferences("CartItems", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.remove("CartItemsList");
-                editor.apply();
+                CustomConfirmAlert.showCustomClearCartDialog(Carrito.this, new CustomConfirmAlert.OnDialogCloseListener() {
+                    @Override
+                    public void onDialogClose() {
+                        SharedPreferences sharedPreferences = getSharedPreferences("CartItems", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.remove("CartItemsList");
+                        editor.apply();
 
-                Intent intent = new Intent(Carrito.this, Index.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                        Intent intent = new Intent(Carrito.this, Index.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                    }
+                });
             }
         });
 
@@ -171,9 +187,11 @@ public class Carrito extends AppCompatActivity {
                     public void onResponse(Call call, Response response) throws IOException {
                         if (response.isSuccessful()) {
                             cartItemsSharedPreferences.edit().remove("CartItemsList").apply();
-                            Intent intent = new Intent(Carrito.this, Index.class);
-                            startActivity(intent);
+                            runOnUiThread(() -> {
+                                CustomAlert.showCustomSuccessDialog(Carrito.this, "¡Pedido enviado!", "Pedido Enviado correctamente", Carrito.this);
+                            });
                         } else {
+                            runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(Carrito.this, "Error", "Error al realizar pedido: "));
                         }
                     }
                 });
