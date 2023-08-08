@@ -273,12 +273,16 @@ public class Profile extends AppCompatActivity {
             }
         }
 
-        private void removeTokenFromSharedPreferences() {
-            SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove("token");
-            editor.apply();
-        }
+    private void removeTokenFromSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("token");
+        SharedPreferences CartItem = getSharedPreferences("CartItems", MODE_PRIVATE);
+        SharedPreferences.Editor edit = CartItem.edit();
+        edit.remove("CartItemsList");
+        editor.apply();
+        edit.apply();
+    }
 
         private void logout() {
             removeTokenFromSharedPreferences();

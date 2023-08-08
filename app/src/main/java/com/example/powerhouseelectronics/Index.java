@@ -1,5 +1,6 @@
 package com.example.powerhouseelectronics;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -416,7 +417,11 @@ public class Index extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("Token", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("token");
+        SharedPreferences CartItem = getSharedPreferences("CartItems", MODE_PRIVATE);
+        SharedPreferences.Editor edit = CartItem.edit();
+        edit.remove("CartItemsList");
         editor.apply();
+        edit.apply();
     }
 
     private void logout() {
