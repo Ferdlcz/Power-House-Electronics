@@ -9,13 +9,12 @@ public class UsersClassAdmin {
     private String phone;
     private String role;
 
-    public UsersClassAdmin(String name, String email, String password, String address, String phone, String role) {
+    public UsersClassAdmin(String name, String email, String password, String address, String phone) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.address = address;
         this.phone = phone;
-        this.role = role;
     }
 
 
@@ -59,12 +58,5 @@ public class UsersClassAdmin {
         this.phone = phone;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
 }

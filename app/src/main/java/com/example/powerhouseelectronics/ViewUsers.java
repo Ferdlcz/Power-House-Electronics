@@ -258,12 +258,6 @@ public class ViewUsers extends AppCompatActivity implements GetUsers.OnEditClick
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     Log.d("USER_DELETE", "Usuario eliminado correctamente");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadUsersFromServer();
-                        }
-                    });
                 } else {
                     Log.d("USER_DELETE", "Error al eliminar usuario: " + response.code());
                 }

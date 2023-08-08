@@ -27,8 +27,7 @@ public interface Api {
             @Part("email") RequestBody email,
             @Part("password") RequestBody password,
             @Part("address") RequestBody address,
-            @Part("phone") RequestBody phone,
-            @Part("role") RequestBody role
+            @Part("phone") RequestBody phone
     );
 
     @Multipart

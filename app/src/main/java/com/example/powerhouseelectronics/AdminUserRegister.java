@@ -10,8 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +28,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AdminUserRegister extends AppCompatActivity {
+public class AdminUserRegister extends AppCompatActivity implements CustomAlert.OnDialogCloseListener{
+
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(AdminUserRegister.this, ViewUsers.class);
+        startActivity(intent);
+        finish();
+    }
+    @Override
+    public void onDialogClose() {
+        navigateToMainActivity();
+    }
 
     UsersClass user;
     Toolbar toolbar;
@@ -88,17 +96,7 @@ public class AdminUserRegister extends AppCompatActivity {
         String password = txtPass.getText().toString();
         String address = txtDireccion.getText().toString();
         String phone = txtNum.getText().toString();
-        String role = "";
-
-        RadioGroup roleGroup = findViewById(R.id.roleGroup);
-        int selectedRadioButtonid = roleGroup.getCheckedRadioButtonId();
-        if(selectedRadioButtonid == -1){
-            Toast.makeText(getApplicationContext(), "Selecciona un rol.", Toast.LENGTH_SHORT).show();
-        }else{
-            RadioButton selectedRadioButton = findViewById(selectedRadioButtonid);
-            role = selectedRadioButton.getText().toString();
-        }
-        return new UsersClassAdmin(name, email, password, address, phone, role);
+        return new UsersClassAdmin(name, email, password, address, phone);
     }
 
     private void enviarDatosUsuario(UsersClassAdmin user) {
@@ -111,8 +109,7 @@ public class AdminUserRegister extends AppCompatActivity {
                 ", Email: " + user.getEmail() +
                 ", Password: " + user.getPassword() +
                 ", Address: " + user.getAddress() +
-                ", Phone: " + user.getPhone() +
-                ", Role: " + user.getRole();
+                ", Phone: " + user.getPhone();
 
         Log.d("API_CALL", logMessage);
 
@@ -122,19 +119,22 @@ public class AdminUserRegister extends AppCompatActivity {
                 RequestBody.create(MediaType.parse("text/plain"), user.getEmail()),
                 RequestBody.create(MediaType.parse("text/plain"), user.getPassword()),
                 RequestBody.create(MediaType.parse("text/plain"), user.getAddress()),
-                RequestBody.create(MediaType.parse("text/plain"), user.getPhone()),
-                RequestBody.create(MediaType.parse("text/plain"), user.getRole())
+                RequestBody.create(MediaType.parse("text/plain"), user.getPhone())
         );
 
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> {
+                        CustomAlert.showCustomSuccessDialog(AdminUserRegister.this, "¡Registro exitoso!", "Usuario registrado correctamente", AdminUserRegister.this);
+                    });
+                   // Toast.makeText(getApplicationContext(), "Registro exitoso", Toast.LENGTH_SHORT).show();
                 } else {
                     try {
                         String errorResponse = response.errorBody().string();
-                        Toast.makeText(getApplicationContext(), "Error en el registro: " + errorResponse, Toast.LENGTH_SHORT).show();
+                        runOnUiThread(() -> CustomErrorAlert.showCustomErrorDialog(AdminUserRegister.this, "Error", "Error en el registro: " + errorResponse));
+                       // Toast.makeText(getApplicationContext(), "Error en el registro: " + errorResponse, Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -149,7 +149,6 @@ public class AdminUserRegister extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

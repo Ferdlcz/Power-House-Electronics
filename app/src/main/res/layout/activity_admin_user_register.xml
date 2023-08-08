@@ -122,38 +122,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.465" />
 
-    <RadioGroup
-        android:id="@+id/roleGroup"
-        android:layout_width="287dp"
-        android:layout_height="53dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/BtnRegistrar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPass">
-
-        <RadioButton
-            android:id="@+id/UserRole"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="user"
-            app:layout_constraintBottom_toTopOf="@+id/BtnRegistrar"
-            app:layout_constraintEnd_toStartOf="@+id/AdminRole"
-            app:layout_constraintHorizontal_bias="0.654"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtPass"
-            app:layout_constraintVertical_bias="0.493" />
-
-        <RadioButton
-            android:id="@+id/AdminRole"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="admin"
-            app:layout_constraintBottom_toTopOf="@+id/BtnRegistrar"
-            app:layout_constraintEnd_toStartOf="@+id/SuperRole"
-            app:layout_constraintTop_toBottomOf="@+id/txtPass"
-            app:layout_constraintVertical_bias="0.493" />
-
-    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
